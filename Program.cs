@@ -8,6 +8,9 @@ namespace Grid_Game
 {
     static class Program
     {
+        public static string difficulty = "";
+        public static string name = "";
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
