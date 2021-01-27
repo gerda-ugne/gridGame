@@ -33,8 +33,8 @@
             this.HardBtn = new System.Windows.Forms.Button();
             this.BackBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.DifficultyLbl = new System.Windows.Forms.Label();
+            this.ScoreBox = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // EasyBtn
@@ -45,6 +45,7 @@
             this.EasyBtn.TabIndex = 0;
             this.EasyBtn.Text = "Easy";
             this.EasyBtn.UseVisualStyleBackColor = true;
+            this.EasyBtn.Click += new System.EventHandler(this.EasyBtn_Click);
             // 
             // MediumBtn
             // 
@@ -54,6 +55,7 @@
             this.MediumBtn.TabIndex = 1;
             this.MediumBtn.Text = "Medium";
             this.MediumBtn.UseVisualStyleBackColor = true;
+            this.MediumBtn.Click += new System.EventHandler(this.MediumBtn_Click);
             // 
             // HardBtn
             // 
@@ -63,6 +65,7 @@
             this.HardBtn.TabIndex = 2;
             this.HardBtn.Text = "Hard";
             this.HardBtn.UseVisualStyleBackColor = true;
+            this.HardBtn.Click += new System.EventHandler(this.HardBtn_Click);
             // 
             // BackBtn
             // 
@@ -84,31 +87,31 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "Highscores:";
             // 
-            // label2
+            // DifficultyLbl
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(172, 165);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 20);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Difficulty:";
+            this.DifficultyLbl.AutoSize = true;
+            this.DifficultyLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DifficultyLbl.Location = new System.Drawing.Point(172, 165);
+            this.DifficultyLbl.Name = "DifficultyLbl";
+            this.DifficultyLbl.Size = new System.Drawing.Size(73, 20);
+            this.DifficultyLbl.TabIndex = 5;
+            this.DifficultyLbl.Text = "Difficulty:";
             // 
-            // listBox1
+            // ScoreBox
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(176, 188);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(341, 303);
-            this.listBox1.TabIndex = 6;
+            this.ScoreBox.FormattingEnabled = true;
+            this.ScoreBox.Location = new System.Drawing.Point(176, 188);
+            this.ScoreBox.Name = "ScoreBox";
+            this.ScoreBox.Size = new System.Drawing.Size(341, 303);
+            this.ScoreBox.TabIndex = 6;
             // 
             // HighScores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(684, 711);
-            this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.ScoreBox);
+            this.Controls.Add(this.DifficultyLbl);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.BackBtn);
             this.Controls.Add(this.HardBtn);
@@ -129,7 +132,7 @@
         private System.Windows.Forms.Button HardBtn;
         private System.Windows.Forms.Button BackBtn;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Label DifficultyLbl;
+        private System.Windows.Forms.ListBox ScoreBox;
     }
 }
