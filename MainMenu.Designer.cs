@@ -42,6 +42,7 @@
             this.StartBtn.TabIndex = 0;
             this.StartBtn.Text = "Start";
             this.StartBtn.UseVisualStyleBackColor = true;
+            this.StartBtn.Click += new System.EventHandler(this.StartBtn_Click);
             // 
             // HighScoresBtn
             // 
@@ -51,6 +52,7 @@
             this.HighScoresBtn.TabIndex = 1;
             this.HighScoresBtn.Text = "High Scores";
             this.HighScoresBtn.UseVisualStyleBackColor = true;
+            this.HighScoresBtn.Click += new System.EventHandler(this.HighScoresBtn_Click);
             // 
             // ExitBtn
             // 
@@ -60,6 +62,7 @@
             this.ExitBtn.TabIndex = 2;
             this.ExitBtn.Text = "Exit";
             this.ExitBtn.UseVisualStyleBackColor = true;
+            this.ExitBtn.Click += new System.EventHandler(this.ExitBtn_Click);
             // 
             // label2
             // 

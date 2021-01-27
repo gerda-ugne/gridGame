@@ -16,5 +16,28 @@ namespace Grid_Game
         {
             InitializeComponent();
         }
+
+        private void StartBtn_Click(object sender, EventArgs e)
+        {
+            using (var DifficultyScreen = new Difficulty())
+            {
+                this.Hide();
+                DifficultyScreen.ShowDialog();
+            }
+        }
+
+        private void HighScoresBtn_Click(object sender, EventArgs e)
+        {
+            using (var HighScoreScreen = new HighScores())
+            {
+                this.Hide();
+                HighScoreScreen.ShowDialog();
+            }
+        }
+
+        private void ExitBtn_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

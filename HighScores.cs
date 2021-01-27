@@ -16,5 +16,14 @@ namespace Grid_Game
         {
             InitializeComponent();
         }
+
+        private void BackBtn_Click(object sender, EventArgs e)
+        {
+            using (var MainMenuScreen = new MainMenu())
+            {
+                this.Hide();
+                MainMenuScreen.ShowDialog();
+            }
+        }
     }
 }
