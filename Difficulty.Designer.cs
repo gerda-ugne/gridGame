@@ -1,7 +1,6 @@
-﻿
-namespace Grid_Game
+﻿namespace Grid_Game
 {
-    partial class Form1
+    partial class Difficulty
     {
         /// <summary>
         /// Required designer variable.
@@ -31,13 +30,14 @@ namespace Grid_Game
         {
             this.SuspendLayout();
             // 
-            // Form1
+            // Difficulty
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(858, 519);
-            this.Name = "Form1";
-            this.Text = "Placeholder name";
+            this.ClientSize = new System.Drawing.Size(684, 711);
+            this.Name = "Difficulty";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Difficulty";
             this.ResumeLayout(false);
 
         }
@@ -45,4 +45,3 @@ namespace Grid_Game
         #endregion
     }
 }
-

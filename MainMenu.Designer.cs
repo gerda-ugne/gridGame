@@ -28,12 +28,72 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.StartBtn = new System.Windows.Forms.Button();
+            this.HighScoresBtn = new System.Windows.Forms.Button();
+            this.ExitBtn = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.SuspendLayout();
+            // 
+            // StartBtn
+            // 
+            this.StartBtn.Location = new System.Drawing.Point(255, 366);
+            this.StartBtn.Name = "StartBtn";
+            this.StartBtn.Size = new System.Drawing.Size(168, 52);
+            this.StartBtn.TabIndex = 0;
+            this.StartBtn.Text = "Start";
+            this.StartBtn.UseVisualStyleBackColor = true;
+            // 
+            // HighScoresBtn
+            // 
+            this.HighScoresBtn.Location = new System.Drawing.Point(255, 437);
+            this.HighScoresBtn.Name = "HighScoresBtn";
+            this.HighScoresBtn.Size = new System.Drawing.Size(168, 52);
+            this.HighScoresBtn.TabIndex = 1;
+            this.HighScoresBtn.Text = "High Scores";
+            this.HighScoresBtn.UseVisualStyleBackColor = true;
+            // 
+            // ExitBtn
+            // 
+            this.ExitBtn.Location = new System.Drawing.Point(255, 511);
+            this.ExitBtn.Name = "ExitBtn";
+            this.ExitBtn.Size = new System.Drawing.Size(168, 52);
+            this.ExitBtn.TabIndex = 2;
+            this.ExitBtn.Text = "Exit";
+            this.ExitBtn.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label2.Location = new System.Drawing.Point(237, 148);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(200, 33);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Mine Sweeper";
+            // 
+            // MainMenu
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(684, 711);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.ExitBtn);
+            this.Controls.Add(this.HighScoresBtn);
+            this.Controls.Add(this.StartBtn);
+            this.Name = "MainMenu";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainMenu";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Button StartBtn;
+        private System.Windows.Forms.Button HighScoresBtn;
+        private System.Windows.Forms.Button ExitBtn;
+        private System.Windows.Forms.Label label2;
     }
 }
