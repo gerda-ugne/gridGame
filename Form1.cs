@@ -269,6 +269,9 @@ namespace Grid_Game
 
                         //Calling a method to show all labels under all buttons (= Game has ended)
                         uncoverAllGrid();
+                        DisplayedTimer.Stop();
+                        TotalTimer.Stop();
+
                     }
                     /* THIS STEP DOES NOT WORK BECAUSE ALL CELLS ARE UNCOVERED EXCEPT THE BOMBS
                      * 
