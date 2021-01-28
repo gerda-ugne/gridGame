@@ -120,7 +120,6 @@ namespace Grid_Game
             TotalTimer.Start();
             DisplayedTimer.Start();
             
-            //Add a stopwatch.Stop() and timer.Stop() when game ends:
             //lblTime.Text = "You have cleared the minefield in " + stopwatch.Elapsed.Seconds.ToString() + "seconds."; 
         }
 
@@ -181,6 +180,7 @@ namespace Grid_Game
         */
         void surroundBombWithNumbers( int k, int l)
         {
+
             for (int i = k - 1; i <= k + 1; i++)
             {
                 for (int j = l - 1; j <= l + 1; j++)
