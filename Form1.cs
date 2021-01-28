@@ -20,15 +20,15 @@ namespace Grid_Game
         static int length = 10;
 
         //Initialize a timer for the game
-        private static System.Timers.Timer timer;
+        System.Windows.Forms.Timer TotalTimer;
+        System.Windows.Forms.Timer DisplayedTimer;
+
+        private int elapsedSeconds = 0;
 
         //Label to display the time
-        Label lblTimer = new Label();
+        Label LblTimer = new Label();
         //Label to display bombs left
-        Label lblBombs = new Label();
-
-        //Intialize a stopwatch to calculate the time taken
-        private static Stopwatch stopwatch;
+        Label LblBombs = new Label();
 
         //Button grid to be displayed to the user
         Button[,] btn = new Button[width, length];
@@ -39,12 +39,18 @@ namespace Grid_Game
             InitializeComponent();
 
             //TODO: scale timer with difficulty
-            timer = new System.Timers.Timer(3000);
-            timer.AutoReset = true;
-            timer.Elapsed += OnTimedEvent;
 
+            //Total timer counts the time until the end of the game
+            TotalTimer = new System.Windows.Forms.Timer();
+            //Displayed timer shows the current elapsed seconds to the player
+            DisplayedTimer = new System.Windows.Forms.Timer();
 
-            stopwatch = new Stopwatch();
+            TotalTimer.Interval = 9990000;
+            DisplayedTimer.Interval = 1000;
+
+            //Event handlers for handling timer ticks
+            TotalTimer.Tick += new EventHandler(TotalTimer_Tick);
+            DisplayedTimer.Tick += new EventHandler(DisplayedTimer_Tick);
 
             /** Customizing grid */
             for (int i = 0; i < btn.GetLength(0); i++)
@@ -54,52 +60,58 @@ namespace Grid_Game
                     btn[i, j] = new Button();
                     btn[i, j].SetBounds(90 + (50 * i), 100 + (50 * j), 45, 45);
                     btn[i, j].BackColor = Color.LightGray;
-                    btn[i, j].MouseUp += new MouseEventHandler(this.btnEvent_MouseUp);
+                    btn[i, j].MouseUp += new MouseEventHandler(this.BtnEvent_MouseUp);
                     Controls.Add(btn[i, j]);
                 }
             }
 
             /** Customizing timer label*/
 
-            lblTimer.Text = "000";
-            lblTimer.Location = new Point(565, 0);
-            lblTimer.Size = new Size(120, 80);
-            lblTimer.TextAlign = ContentAlignment.MiddleRight;
-            lblTimer.BackColor = Color.Black;
-            lblTimer.ForeColor = Color.Red;
-            lblTimer.Font = new Font("Calibri", 40);
-            this.Controls.Add(lblTimer);
+            LblTimer.Text = "000";
+            LblTimer.Location = new Point(565, 0);
+            LblTimer.Size = new Size(120, 80);
+            LblTimer.TextAlign = ContentAlignment.MiddleRight;
+            LblTimer.BackColor = Color.Black;
+            LblTimer.ForeColor = Color.Red;
+            LblTimer.Font = new Font("Calibri", 40);
+            this.Controls.Add(LblTimer);
 
             /** Customizing bombs label*/
-            lblBombs.Text = "50";
-            lblBombs.Location = new Point(0, 0);
-            lblBombs.Size = new Size(120, 80);
-            lblBombs.TextAlign = ContentAlignment.MiddleLeft;
-            lblBombs.BackColor = Color.Black;
-            lblBombs.ForeColor = Color.Red;
-            lblBombs.Font = new Font("Calibri", 40);
-            this.Controls.Add(lblBombs);
+            LblBombs.Text = "50";
+            LblBombs.Location = new Point(0, 0);
+            LblBombs.Size = new Size(120, 80);
+            LblBombs.TextAlign = ContentAlignment.MiddleLeft;
+            LblBombs.BackColor = Color.Black;
+            LblBombs.ForeColor = Color.Red;
+            LblBombs.Font = new Font("Calibri", 40);
+            this.Controls.Add(LblBombs);
 
-            stopwatch.Start();
-            timer.Start();
+            TotalTimer.Start();
+            DisplayedTimer.Start();
             
             //Add a stopwatch.Stop() and timer.Stop() when game ends:
             //lblTime.Text = "You have cleared the minefield in " + stopwatch.Elapsed.Seconds.ToString() + "seconds."; 
         }
 
-
-        /** Event that happens once the timer reaches the limit of time given*/
-        private void OnTimedEvent(object sender, ElapsedEventArgs e)
+        /**Displays the current elapsed time to the player.*/
+        private void DisplayedTimer_Tick(object sender, EventArgs e)
         {
-            timer.Stop();
-            stopwatch.Stop();
-
-            DialogResult result = MessageBox.Show("Time is due. Would you like to try again ?", "Time's up", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
-            //lblTimer.Text = Convert.ToString(stopwatch.Elapsed.TotalSeconds);
+            elapsedSeconds++;
+            LblTimer.Text = Convert.ToString(elapsedSeconds);
         }
 
+        /** Event that happens once the timer reaches the limit of time given*/
+        private void TotalTimer_Tick(object sender, EventArgs e)
+        {
+            TotalTimer.Stop();
+            DisplayedTimer.Stop();
+
+            DialogResult result = MessageBox.Show("Time is due. Would you like to try again ?", "Time's up", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
+        }
+
+
         /**Controls the click events for the grid*/
-        private void btnEvent_MouseUp(object sender, MouseEventArgs e)
+        private void BtnEvent_MouseUp(object sender, MouseEventArgs e)
         {
             switch (e.Button)
             {
@@ -109,7 +121,7 @@ namespace Grid_Game
                     //If clicked on a mistaken bomb, bomb counter increments
                     if (((Button)sender).BackColor == Color.Red)
                     {
-                        lblBombs.Text = Convert.ToString((Convert.ToInt32(lblBombs.Text) + 1));
+                        LblBombs.Text = Convert.ToString((Convert.ToInt32(LblBombs.Text) + 1));
                     }
                     ((Button)sender).BackColor = Color.White;
                     break;
@@ -122,13 +134,13 @@ namespace Grid_Game
                     if (((Button)sender).BackColor == Color.Red)
                     {
                         ((Button)sender).BackColor = Color.LightGray;
-                        lblBombs.Text = Convert.ToString((Convert.ToInt32(lblBombs.Text) + 1));
+                        LblBombs.Text = Convert.ToString((Convert.ToInt32(LblBombs.Text) + 1));
                     }
                     else if (((Button)sender).BackColor == Color.White) ;
                     else
                     {
                         ((Button)sender).BackColor = Color.Red;
-                        lblBombs.Text = Convert.ToString((Convert.ToInt32(lblBombs.Text) - 1));
+                        LblBombs.Text = Convert.ToString((Convert.ToInt32(LblBombs.Text) - 1));
                     }
                     break;
 
@@ -141,7 +153,7 @@ namespace Grid_Game
 
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void Panel1_Paint(object sender, PaintEventArgs e)
         {
             
         }
