@@ -22,6 +22,7 @@ namespace Grid_Game
         System.Windows.Forms.Timer DisplayedTimer;
 
         private int elapsedSeconds = 0;
+        int bombAmount = 10;
 
         //Label to display the time
         Label LblTimer = new Label();
@@ -107,7 +108,7 @@ namespace Grid_Game
             this.Controls.Add(LblTimer);
 
             /** Customizing bombs label*/
-            LblBombs.Text = "50";
+            LblBombs.Text = Convert.ToString(bombAmount);
             LblBombs.Location = new Point(0, 0);
             LblBombs.Size = new Size(120, 80);
             LblBombs.TextAlign = ContentAlignment.MiddleLeft;
@@ -149,10 +150,10 @@ namespace Grid_Game
 
             //beginner's level: generating 10 bombs that are randomly placed
             //on a grid
-            while (x < 10)
+            while (x < bombAmount)
             {
-                k = r.Next(9);
-                l = r.Next(9);
+                k = r.Next(bombAmount-1);
+                l = r.Next(bombAmount-1);
 
                 //checking if there is an image already under the button
                 //if yes, skip the following steps
