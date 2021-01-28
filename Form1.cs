@@ -305,6 +305,12 @@ namespace Grid_Game
                     {
                         ((GridButton)sender).BackColor = Color.LightGray;
                         LblBombs.Text = Convert.ToString((Convert.ToInt32(LblBombs.Text) + 1));
+
+
+                        GridButton tempBtn = (GridButton)sender;
+                        lowerGrid[tempBtn.row, tempBtn.column].BackColor = Color.LightGray;
+                        ((GridButton)sender).BackColor = Color.LightGray;
+                        ((GridButton)sender).ForeColor = Color.LightGray;
                     }
                     else if (((GridButton)sender).BackColor == Color.White) ; // do nothing as you cannot mark an opened field as a bomb
                     else
