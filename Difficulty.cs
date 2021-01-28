@@ -62,6 +62,11 @@ namespace Grid_Game
         {
             if (Program.name != "" && Program.difficulty != "")
             {
+                using (var TimerTest = new TimerTest())
+                {
+                    this.Hide();
+                    TimerTest.ShowDialog();
+                }
             }
             else if (Program.name == "")
             {
