@@ -249,8 +249,8 @@ namespace Grid_Game
                         TotalTimer.Stop();
 
                     }
-                    /* THIS STEP DOES NOT WORK BECAUSE ALL CELLS ARE UNCOVERED EXCEPT THE BOMBS
-                     * 
+                     //THIS STEP DOES NOT WORK BECAUSE ALL CELLS ARE UNCOVERED EXCEPT THE BOMBS
+                    
                     //If there is no text on a button 
                     else if (((GridButton)sender).Text.Equals("1") == false && ((GridButton)sender).Text.Equals("2") == false
                         && ((GridButton)sender).Text.Equals("3") == false)
@@ -262,7 +262,7 @@ namespace Grid_Game
                         //Calling a method to uncover the neighbours of an empty cell - NOT WORKING YET
                         uncoverPartOfGrid(tempBtn.row, tempBtn.column);
 
-                    }*/
+                    }
                     else
                     {
                         //Display a button in white color and change the color of text on a button to be more visible
@@ -338,8 +338,10 @@ namespace Grid_Game
                 return;
             }
             //If a button contains a bomb indication or the button has been already revealed
-            if (btn[i, j].Text.Equals("*") == true || btn[i, j].BackColor.Equals(Color.White) == true)
+            if (btn[i, j].Text.Equals("*") == true || btn[i, j].BackColor == Color.White)
                 return;
+            //If there are more neighbours than 0, do not reveal more
+            if (countNeighbours(i, j) != 0) return;
             //Colors a button in white and makes the text on a button visible
             btn[i, j].BackColor = Color.White;
             btn[i, j].ForeColor = Color.DarkViolet;
@@ -347,6 +349,9 @@ namespace Grid_Game
             uncoverPartOfGrid(i, j-1);
             uncoverPartOfGrid(i+1,j );
             uncoverPartOfGrid(i-1, j);
+
+
+
 
         }
 
