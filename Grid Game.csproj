@@ -58,6 +58,9 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GridButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="HighScores.cs">
       <SubType>Form</SubType>
     </Compile>
