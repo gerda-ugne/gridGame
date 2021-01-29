@@ -77,24 +77,6 @@ namespace Grid_Game
 
                 }
             }
-            generateGridOfLabels();
-            placeBombs();
-            placeNumbers();
-        }
-
-        //Generating a layer of labels that are located under the buttons
-        private void generateGridOfLabels()
-        {
-            for (int i = 0; i < lowerGrid.GetLength(0); i++)
-            {
-                for (int j = 0; j < lowerGrid.GetLength(1); j++)
-                {
-                    lowerGrid[i, j] = new Label();
-                    lowerGrid[i, j].SetBounds(90 + (50 * i), 100 + (50 * j), 45, 45);
-                    lowerGrid[i, j].BackColor = Color.White;
-                    Controls.Add(lowerGrid[i, j]);
-                }
-            }
 
             /** Customizing timer label*/
 
@@ -119,8 +101,28 @@ namespace Grid_Game
 
             TotalTimer.Start();
             DisplayedTimer.Start();
-            
+
             //lblTime.Text = "You have cleared the minefield in " + stopwatch.Elapsed.Seconds.ToString() + "seconds."; 
+
+
+            generateGridOfLabels();
+            placeBombs();
+            placeNumbers();
+        }
+
+        //Generating a layer of labels that are located under the buttons
+        private void generateGridOfLabels()
+        {
+            for (int i = 0; i < lowerGrid.GetLength(0); i++)
+            {
+                for (int j = 0; j < lowerGrid.GetLength(1); j++)
+                {
+                    lowerGrid[i, j] = new Label();
+                    lowerGrid[i, j].SetBounds(90 + (50 * i), 100 + (50 * j), 45, 45);
+                    lowerGrid[i, j].BackColor = Color.White;
+                    Controls.Add(lowerGrid[i, j]);
+                }
+            }
         }
 
         /**Displays the current elapsed time to the player.*/
@@ -166,84 +168,57 @@ namespace Grid_Game
                 btn[k, l].Text = "*";
                 btn[k, l].ForeColor = Color.LightGray;
 
-                //calling a methods to surround a button with numbers
-                surroundBombWithNumbers( k, l);
                 x++;
 
             }
             
         }
 
-        /** Surrounding a bomb with numbers
-        /* k - a column number
-        /* l - a row number
-        */
-        void surroundBombWithNumbers( int k, int l)
+        /** Counts the neighbours that have bombs around each cell*/
+        private int countNeighbours(int x, int y)
         {
+            int totalNeighbours = 0;
 
-            for (int i = k - 1; i <= k + 1; i++)
+            //If the field is a bomb, pass
+            if (btn[x, y].Text == "*") return -1;
+
+            //Else count every bomb around the cell
+            for (int i = x - 1; i <= x+1; i++)
             {
-                for (int j = l - 1; j <= l + 1; j++)
+                for(int j = y-1; j <= y+1; j++)
                 {
-                    //If coordinates are out of bound, skip
-                    if (i == -1 || j == -1)
-                        continue;
-                    //If coordinates matches those of a bomb, skip
-                    else if (i == k && j == l)
-                        continue;
-                    //If the cell already contains another bomb, skip
-                    else if (btn[i, j].Text.Equals("*"))
-                        continue;
-                    else
-                    {
-                        //generates a random number from 1-3
-                        int n = r.Next(1, 4);
-
-                        //the random number is written on a button in the same color as the button itself so that it would not be 
-                        //visible for a user
-                        btn[i, j].Text = Convert.ToString(n);
-                        btn[i, j].ForeColor = Color.LightGray; ;
-
-                        //the same random number is written on a label that is under a button
-                        lowerGrid[i, j].Text = Convert.ToString(n);
-                        lowerGrid[i, j].TextAlign = ContentAlignment.MiddleCenter;
-                    }
+                    if (i < 0 || j < 0 || i >= width || j >= length) continue; //avoiding out of boundaries
+                    if (btn[i, j].Text == "*") totalNeighbours++;
                 }
             }
 
+            Console.WriteLine(totalNeighbours);
+            return totalNeighbours;
         }
 
-        /** Placing random numbers from 1-3 on a grid */
+
+        /** Placing numbers that indicate bombs on the grid*/
         private void placeNumbers()
         {
-            int y = 0;
-            int k, l;
-
-            //There are 10 random number generated and placed on a grid
-            while (y < 10)
+           int neighbourBombs = 0;
+           for(int i = 0; i < btn.GetLength(0); i++)
             {
-                //generates random coordinates from 0-9
-                k = r.Next(9);
-                l = r.Next(9);
+                for(int j = 0; j < btn.GetLength(1); j++)
+                {
+                    neighbourBombs = countNeighbours(i, j);
+                    Console.WriteLine(neighbourBombs);
+                    if (neighbourBombs > 0 && neighbourBombs != -1)
+                    {
+                        btn[i, j].Text = Convert.ToString(neighbourBombs);
+                        btn[i, j].ForeColor = Color.LightGray;
 
-                //if a button has a bomb indication, skip
-                if (btn[k, l].Text.Equals("*"))
-                    continue;
-                //generates a random number from 1-3
-                int n = r.Next(1, 4);
+                        //the same random number is written on a label that is under a button
+                        lowerGrid[i, j].Text = Convert.ToString(neighbourBombs);
+                        lowerGrid[i, j].TextAlign = ContentAlignment.MiddleCenter;
+                    }
 
-                //the random number is written on a button in the same color as the button itself so that it would not be 
-                //visible for a user
-                btn[k, l].Text = Convert.ToString(n);
-                btn[k, l].ForeColor = Color.LightGray;
-
-                //the same random number is written on a label that is under a button
-                lowerGrid[k, l].Text = Convert.ToString(n);
-                lowerGrid[k, l].TextAlign = ContentAlignment.MiddleCenter;
-
-                y++;
+                }
             }
-            
         }
 
 
