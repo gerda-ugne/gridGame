@@ -21,9 +21,9 @@ namespace Grid_Game
         System.Windows.Forms.Timer TotalTimer;
         System.Windows.Forms.Timer DisplayedTimer;
 
-        private int elapsedSeconds = 0;
-        int bombAmount = 10;
+        private int elapsedSeconds = 999;
 
+        int bombAmount = Program.BombAmountSet;
         //Label to display the time
         Label LblTimer = new Label();
         //Label to display bombs left
@@ -53,11 +53,11 @@ namespace Grid_Game
             //Displayed timer shows the current elapsed seconds to the player
             DisplayedTimer = new System.Windows.Forms.Timer();
 
-            TotalTimer.Interval = 9990000;
+            //TotalTimer.Interval = 9990000;
             DisplayedTimer.Interval = 1000;
 
             //Event handlers for handling timer ticks
-            TotalTimer.Tick += new EventHandler(TotalTimer_Tick);
+            //TotalTimer.Tick += new EventHandler(TotalTimer_Tick);
             DisplayedTimer.Tick += new EventHandler(DisplayedTimer_Tick);
 
             /** Customizing grid */
@@ -80,7 +80,7 @@ namespace Grid_Game
 
             /** Customizing timer label*/
 
-            LblTimer.Text = "000";
+            LblTimer.Text = "999";
             LblTimer.Location = new Point(565, 0);
             LblTimer.Size = new Size(120, 80);
             LblTimer.TextAlign = ContentAlignment.MiddleRight;
@@ -128,19 +128,25 @@ namespace Grid_Game
         /**Displays the current elapsed time to the player.*/
         private void DisplayedTimer_Tick(object sender, EventArgs e)
         {
-            elapsedSeconds++;
+            elapsedSeconds--;
             LblTimer.Text = Convert.ToString(elapsedSeconds);
+            if (elapsedSeconds == 0)
+            {
+                TotalTimer.Stop();
+                DisplayedTimer.Stop();
+                gameOver();
+            }
         }
 
 
         /** Event that happens once the timer reaches the limit of time given*/
-        private void TotalTimer_Tick(object sender, EventArgs e)
-        {
-            TotalTimer.Stop();
-            DisplayedTimer.Stop();
+        //private void TotalTimer_Tick(object sender, EventArgs e)
+       // {
+          //  TotalTimer.Stop();
+          //  DisplayedTimer.Stop();
 
-            DialogResult result = MessageBox.Show("Time is due. Would you like to try again ?", "Time's up", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
-        }
+          //  DialogResult result = MessageBox.Show("Time is due. Would you like to try again ?", "Time's up", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
+       // }
 
         /** Randomly placing bombs on a grid*/
         private void placeBombs()
@@ -153,8 +159,8 @@ namespace Grid_Game
             //on a grid
             while (x < bombAmount)
             {
-                k = r.Next(bombAmount-1);
-                l = r.Next(bombAmount-1);
+                k = r.Next(width-1);
+                l = r.Next(length-1);
 
                 //checking if there is an image already under the button
                 //if yes, skip the following steps
@@ -285,7 +291,7 @@ namespace Grid_Game
                         ((GridButton)sender).BackColor = Color.LightGray;
                         ((GridButton)sender).ForeColor = Color.LightGray;
                     }
-                    else if (((GridButton)sender).BackColor == Color.White) ; // do nothing as you cannot mark an opened field as a bomb
+                    else if (((GridButton)sender).BackColor == Color.White); // do nothing as you cannot mark an opened field as a bomb
                     else
                     {
                         ((Button)sender).BackColor = Color.Red;
@@ -315,6 +321,23 @@ namespace Grid_Game
             uncoverAllGrid();
             DisplayedTimer.Stop();
             TotalTimer.Stop();
+            DialogResult result = MessageBox.Show("Would you like to try again ?", "Game Over", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
+            if (result == DialogResult.Retry)
+            {
+                using (var GameForm = new Minesweeper())
+                {
+                    this.Hide();
+                    GameForm.ShowDialog();
+                }
+            }
+            else if (result == DialogResult.Cancel)
+            {
+                using (var MainMenuScreen = new MainMenu())
+                {
+                    this.Hide();
+                    MainMenuScreen.ShowDialog();
+                }
+            }
         }
 
         //Displaying all bombs and numbers that are on a grid
@@ -364,7 +387,7 @@ namespace Grid_Game
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+           
         }
 
 

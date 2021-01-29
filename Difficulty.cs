@@ -62,11 +62,28 @@ namespace Grid_Game
         {
             if (Program.name != "" && Program.difficulty != "")
             {
-                /**using (var TimerTest = new TimerTest())
+                if (Program.difficulty == "Easy")
+                {
+                    Program.BombAmountSet = 5;
+                }
+                else if (Program.difficulty == "Medium")
+                {
+                    Program.BombAmountSet = 10;
+                }
+                else if (Program.difficulty == "Hard")
+                {
+                    Program.BombAmountSet = 15;
+                }
+                else
+                {
+                    MessageBox.Show("Error: Difficulty selection error");
+                }
+
+                using (var GameForm = new Minesweeper())
                 {
                     this.Hide();
-                    TimerTest.ShowDialog();
-                }*/
+                    GameForm.ShowDialog();
+                }
             }
             else if (Program.name == "")
             {

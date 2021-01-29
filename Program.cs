@@ -10,6 +10,7 @@ namespace Grid_Game
     {
         public static string difficulty = "";
         public static string name = "";
+        public static int BombAmountSet =  10;
 
         /// <summary>
         /// The main entry point for the application.

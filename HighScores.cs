@@ -84,5 +84,10 @@ namespace Grid_Game
                 ScoreBox.Items.Add(combined);
             }
         }
+
+        private void HighScores_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
