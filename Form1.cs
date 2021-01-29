@@ -233,33 +233,30 @@ namespace Grid_Game
                 //If a tile on grid is clicked on with left click, the colour is changed to white
                 case MouseButtons.Left:
 
-                    //If clicked on a mistaken bomb, bomb counter increments
+                    //Clicking on a marked field
                     if (((GridButton)sender).BackColor == Color.Red)
                     {
+                        //If the marked field had a bomb
+                        if(((GridButton)sender).Text == "*") gameOver();
+
+                        ((GridButton)sender).BackColor = Color.White;
+                        ((GridButton)sender).ForeColor = Color.DarkViolet;
+
                         LblBombs.Text = Convert.ToString((Convert.ToInt32(LblBombs.Text) + 1));
                     }
-                    //If a button has an idication of a bomb
+                    //If a button has an indication of a bomb
                     else if (text.Equals(((GridButton)sender).Text))
                     {
-                        //((Button)sender).Hide();
-
-                        //Calling a method to show all labels under all buttons (= Game has ended)
-                        uncoverAllGrid();
-                        DisplayedTimer.Stop();
-                        TotalTimer.Stop();
-
+                        gameOver();
                     }
-                     //THIS STEP DOES NOT WORK BECAUSE ALL CELLS ARE UNCOVERED EXCEPT THE BOMBS
-                    
+
                     //If there is no text on a button 
                     else if (((GridButton)sender).Text.Equals("1") == false && ((GridButton)sender).Text.Equals("2") == false
                         && ((GridButton)sender).Text.Equals("3") == false)
                     {
                         //Creating a temp variable to get the number of a row and column of that specific button
                         GridButton tempBtn = (GridButton)sender;
-                       // Console.WriteLine(tempBtn.row + " " + tempBtn.col);
-
-                        //Calling a method to uncover the neighbours of an empty cell - NOT WORKING YET
+                        //Calling a method to uncover the neighbours of an empty cell 
                         uncoverPartOfGrid(tempBtn.row, tempBtn.column);
 
                     }
@@ -310,6 +307,14 @@ namespace Grid_Game
 
             }
 
+        }
+
+        /** Method is called when the game ends.*/
+        private void gameOver()
+        {
+            uncoverAllGrid();
+            DisplayedTimer.Stop();
+            TotalTimer.Stop();
         }
 
         //Displaying all bombs and numbers that are on a grid
