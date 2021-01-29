@@ -15,8 +15,7 @@ namespace Grid_Game
     public partial class Minesweeper : Form
     {
 
-        //Edit the size depending on difficulty
-
+       
         //Initialize a timer for the game
         System.Windows.Forms.Timer TotalTimer;
         System.Windows.Forms.Timer DisplayedTimer;
@@ -45,6 +44,10 @@ namespace Grid_Game
         public Minesweeper()
         {
             InitializeComponent();
+
+            Image bgImage = Image.FromFile("bgImage.png");
+            this.BackgroundImage = bgImage;
+            this.BackgroundImageLayout = ImageLayout.Stretch;
 
             //TODO: scale timer with difficulty
 
