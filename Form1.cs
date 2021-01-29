@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 
 namespace Grid_Game
@@ -14,12 +16,27 @@ namespace Grid_Game
     {
 
         //Edit the size depending on difficulty
+
+        //Initialize a timer for the game
+        System.Windows.Forms.Timer TotalTimer;
+        System.Windows.Forms.Timer DisplayedTimer;
+
+        private int elapsedSeconds = 0;
+        int bombAmount = 10;
+
+        //Label to display the time
+        Label LblTimer = new Label();
+        //Label to display bombs left
+        Label LblBombs = new Label();
+
         //The 2D grid 
+        static int width = 10;
+        static int length = 10;
         //The buttons are of a GridButton data type
-        GridButton[,] btn = new GridButton[10, 10];
+        GridButton[,] btn = new GridButton[width, length];
 
         //A grid under the buttons
-        Label[,] lowerGrid = new Label[10, 10];
+        Label[,] lowerGrid = new Label[width, length];
         //Bomb image
         Image img = Image.FromFile("b.png");
         Random r = new Random();
@@ -29,6 +46,21 @@ namespace Grid_Game
         {
             InitializeComponent();
 
+            //TODO: scale timer with difficulty
+
+            //Total timer counts the time until the end of the game
+            TotalTimer = new System.Windows.Forms.Timer();
+            //Displayed timer shows the current elapsed seconds to the player
+            DisplayedTimer = new System.Windows.Forms.Timer();
+
+            TotalTimer.Interval = 9990000;
+            DisplayedTimer.Interval = 1000;
+
+            //Event handlers for handling timer ticks
+            TotalTimer.Tick += new EventHandler(TotalTimer_Tick);
+            DisplayedTimer.Tick += new EventHandler(DisplayedTimer_Tick);
+
+            /** Customizing grid */
             for (int i = 0; i < btn.GetLength(0); i++)
             {
                 for (int j = 0; j < btn.GetLength(1); j++)
@@ -38,7 +70,8 @@ namespace Grid_Game
                     btn[i, j].column = j;
                     btn[i, j].SetBounds(90 + (50 * i), 100 + (50 * j), 45, 45);
                     btn[i, j].BackColor = Color.LightGray;
-                    btn[i, j].MouseUp += new MouseEventHandler(this.btnEvent_MouseUp);
+
+                    btn[i, j].MouseUp += new MouseEventHandler(this.BtnEvent_MouseUp);
 
                     Controls.Add(btn[i, j]);
 
@@ -62,9 +95,52 @@ namespace Grid_Game
                     Controls.Add(lowerGrid[i, j]);
                 }
             }
+
+            /** Customizing timer label*/
+
+            LblTimer.Text = "000";
+            LblTimer.Location = new Point(565, 0);
+            LblTimer.Size = new Size(120, 80);
+            LblTimer.TextAlign = ContentAlignment.MiddleRight;
+            LblTimer.BackColor = Color.Black;
+            LblTimer.ForeColor = Color.Red;
+            LblTimer.Font = new Font("Calibri", 40);
+            this.Controls.Add(LblTimer);
+
+            /** Customizing bombs label*/
+            LblBombs.Text = Convert.ToString(bombAmount);
+            LblBombs.Location = new Point(0, 0);
+            LblBombs.Size = new Size(120, 80);
+            LblBombs.TextAlign = ContentAlignment.MiddleLeft;
+            LblBombs.BackColor = Color.Black;
+            LblBombs.ForeColor = Color.Red;
+            LblBombs.Font = new Font("Calibri", 40);
+            this.Controls.Add(LblBombs);
+
+            TotalTimer.Start();
+            DisplayedTimer.Start();
+            
+            //lblTime.Text = "You have cleared the minefield in " + stopwatch.Elapsed.Seconds.ToString() + "seconds."; 
         }
 
-        //Randomly placing bombs on a grid
+        /**Displays the current elapsed time to the player.*/
+        private void DisplayedTimer_Tick(object sender, EventArgs e)
+        {
+            elapsedSeconds++;
+            LblTimer.Text = Convert.ToString(elapsedSeconds);
+        }
+
+
+        /** Event that happens once the timer reaches the limit of time given*/
+        private void TotalTimer_Tick(object sender, EventArgs e)
+        {
+            TotalTimer.Stop();
+            DisplayedTimer.Stop();
+
+            DialogResult result = MessageBox.Show("Time is due. Would you like to try again ?", "Time's up", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
+        }
+
+        /** Randomly placing bombs on a grid*/
         private void placeBombs()
         {
 
@@ -73,10 +149,10 @@ namespace Grid_Game
 
             //beginner's level: generating 10 bombs that are randomly placed
             //on a grid
-            while (x < 10)
+            while (x < bombAmount)
             {
-                k = r.Next(9);
-                l = r.Next(9);
+                k = r.Next(bombAmount-1);
+                l = r.Next(bombAmount-1);
 
                 //checking if there is an image already under the button
                 //if yes, skip the following steps
@@ -98,11 +174,13 @@ namespace Grid_Game
             
         }
 
-        //Surrounding a bomb with numbers
-        // k - a column number
-        // l - a row number
+        /** Surrounding a bomb with numbers
+        /* k - a column number
+        /* l - a row number
+        */
         void surroundBombWithNumbers( int k, int l)
         {
+
             for (int i = k - 1; i <= k + 1; i++)
             {
                 for (int j = l - 1; j <= l + 1; j++)
@@ -135,7 +213,7 @@ namespace Grid_Game
 
         }
 
-        //Placing random numbers from 1-3 on a grid
+        /** Placing random numbers from 1-3 on a grid */
         private void placeNumbers()
         {
             int y = 0;
@@ -169,8 +247,8 @@ namespace Grid_Game
         }
 
 
-        //Controls the click events for the grid
-        private void btnEvent_MouseUp(object sender, MouseEventArgs e)
+        /** Controls the click events for the grid */
+        private void BtnEvent_MouseUp(object sender, MouseEventArgs e)
         {
             //A text indication of a button that there is a bomb under itself
             string text = "*";
@@ -179,13 +257,22 @@ namespace Grid_Game
             {
                 //If a tile on grid is clicked on with left click, the colour is changed to white
                 case MouseButtons.Left:
+
+                    //If clicked on a mistaken bomb, bomb counter increments
+                    if (((GridButton)sender).BackColor == Color.Red)
+                    {
+                        LblBombs.Text = Convert.ToString((Convert.ToInt32(LblBombs.Text) + 1));
+                    }
                     //If a button has an idication of a bomb
-                    if (text.Equals(((GridButton)sender).Text))
+                    else if (text.Equals(((GridButton)sender).Text))
                     {
                         //((Button)sender).Hide();
 
                         //Calling a method to show all labels under all buttons (= Game has ended)
                         uncoverAllGrid();
+                        DisplayedTimer.Stop();
+                        TotalTimer.Stop();
+
                     }
                     /* THIS STEP DOES NOT WORK BECAUSE ALL CELLS ARE UNCOVERED EXCEPT THE BOMBS
                      * 
@@ -213,9 +300,25 @@ namespace Grid_Game
                 //If a tile on grid is clicked on with right click, the colour is changed to red
                 //When clicked again, it's reverted back to gray.
                 case MouseButtons.Right:
-                    if (((GridButton)sender).BackColor == Color.Red) ((GridButton)sender).BackColor = Color.LightGray;
+
+
+                    if (((GridButton)sender).BackColor == Color.Red)
+                    {
+                        ((GridButton)sender).BackColor = Color.LightGray;
+                        LblBombs.Text = Convert.ToString((Convert.ToInt32(LblBombs.Text) + 1));
+
+
+                        GridButton tempBtn = (GridButton)sender;
+                        lowerGrid[tempBtn.row, tempBtn.column].BackColor = Color.LightGray;
+                        ((GridButton)sender).BackColor = Color.LightGray;
+                        ((GridButton)sender).ForeColor = Color.LightGray;
+                    }
+                    else if (((GridButton)sender).BackColor == Color.White) ; // do nothing as you cannot mark an opened field as a bomb
                     else
                     {
+                        ((Button)sender).BackColor = Color.Red;
+                        LblBombs.Text = Convert.ToString((Convert.ToInt32(LblBombs.Text) - 1));
+                        
                         //Creating a temp variable to get the number of a row and a column of that specific button
                         GridButton tempBtn = (GridButton)sender;
                         
@@ -224,8 +327,10 @@ namespace Grid_Game
                         lowerGrid[tempBtn.row, tempBtn.column].BackColor = Color.Red;
                         ((GridButton)sender).BackColor = Color.Red;
                         ((GridButton)sender).ForeColor = Color.Red;
-
+                    
                     }
+                        
+
                     break;
 
             }
@@ -277,9 +382,6 @@ namespace Grid_Game
 
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
 
-        }
     }
 }
