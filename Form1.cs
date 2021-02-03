@@ -296,7 +296,7 @@ namespace Grid_Game
 
                     //If there is no text on a button 
                     else if (((GridButton)sender).Text.Equals("1") == false && ((GridButton)sender).Text.Equals("2") == false
-                        && ((GridButton)sender).Text.Equals("3") == false)
+                        && ((GridButton)sender).Text.Equals("3") == false && ((GridButton)sender).Text.Equals("4") == false && ((GridButton)sender).Text.Equals("5") == false && ((GridButton)sender).Text.Equals("6") == false)
                     {
                         //Creating a temp variable to get the number of a row and column of that specific button
                         GridButton tempBtn = (GridButton)sender;
