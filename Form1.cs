@@ -410,18 +410,32 @@ namespace Grid_Game
 
         private void winMessage()
         {
+            uncoverAllGrid();
+            DisplayedTimer.Stop();
+            TotalTimer.Stop();
+
             DialogResult result = MessageBox.Show("You won, would you like to save your score?", "WIN", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
             if (result == DialogResult.Yes)
             {
                 saveData();
+                
             }
-            else if (result == DialogResult.No)
+            DialogResult playAgain = MessageBox.Show("Would you like to play again ?", "Play again?", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
+            if (playAgain == DialogResult.Retry)
             {
+                using (var GameForm = new Minesweeper())
+                {
+                    this.Hide();
+                    GameForm.ShowDialog();
+                }
             }
-            using (var MainMenuScreen = new MainMenu())
+            else if (playAgain == DialogResult.Cancel)
             {
-                this.Hide();
-                MainMenuScreen.ShowDialog();
+                using (var MainMenuScreen = new MainMenu())
+                {
+                    this.Hide();
+                    MainMenuScreen.ShowDialog();
+                }
             }
         }
 
