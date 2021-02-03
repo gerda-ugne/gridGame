@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -231,10 +233,37 @@ namespace Grid_Game
         }
 
         /** Check that all bombs are covered by red squares**/
-        private void checkBombs() 
+        private void saveData() 
         {
-            int totalBombs = Program.BombAmountSet;
-            
+            String playerScore = LblTimer.Text;
+            String playerName = Program.name;
+
+            String ToSave = playerName + "." + playerScore;
+
+            String SavePath = "";
+
+            if (Program.difficulty == "Easy")
+            {
+                SavePath = "..\\SaveGames\\Easy.txt";
+            }
+
+            else if (Program.difficulty == "Medium")
+            {
+                SavePath = "..\\SaveGames\\Medium.txt";
+            }
+
+            else if (Program.difficulty == "Hard")
+            {
+                SavePath = "..\\SaveGames\\Hard.txt";
+            }
+            else
+            {
+                MessageBox.Show("ERROR: Unknown save file");
+            }
+
+            var sw = new StreamWriter(SavePath, true);
+            sw.Write(ToSave);
+            sw.Dispose();
         }
 
         /** Controls the click events for the grid */
@@ -307,7 +336,9 @@ namespace Grid_Game
 
                         if (BombsToFind == 0 && LblBombs.Text == "0")
                         {
-                            MessageBox.Show("YOU WON");
+                            TotalTimer.Stop();
+                            DisplayedTimer.Stop();
+                            winMessage();
                         }
                     }
                     else if (((GridButton)sender).BackColor == Color.White); // do nothing as you cannot mark an opened field as a bomb
@@ -326,7 +357,9 @@ namespace Grid_Game
 
                         if (BombsToFind==0 && LblBombs.Text == "0")
                         {
-                            MessageBox.Show("YOU WON");
+                            TotalTimer.Stop();
+                            DisplayedTimer.Stop();
+                            winMessage();
                         }
 
                         //Setting the color of a label which is under the button to be red so that when all cells are dispayed
@@ -366,6 +399,23 @@ namespace Grid_Game
                     this.Hide();
                     MainMenuScreen.ShowDialog();
                 }
+            }
+        }
+
+        private void winMessage()
+        {
+            DialogResult result = MessageBox.Show("You won, would you like to save your score?", "WIN", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+            if (result == DialogResult.Yes)
+            {
+                saveData();
+            }
+            else if (result == DialogResult.No)
+            {
+            }
+            using (var MainMenuScreen = new MainMenu())
+            {
+                this.Hide();
+                MainMenuScreen.ShowDialog();
             }
         }
 
