@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +33,9 @@ namespace Grid_Game
         //The 2D grid 
         static int width = 18;
         static int length = 18;
+        int BombsToFind = Program.BombAmountSet;
+
+
         //The buttons are of a GridButton data type
         GridButton[,] btn = new GridButton[width, length];
 
@@ -111,6 +116,8 @@ namespace Grid_Game
             generateGridOfLabels();
             placeBombs();
             placeNumbers();
+
+          
         }
 
         //Generating a layer of labels that are located under the buttons
@@ -230,6 +237,39 @@ namespace Grid_Game
             }
         }
 
+        /** Check that all bombs are covered by red squares**/
+        private void saveData() 
+        {
+            String playerScore = LblTimer.Text;
+            String playerName = Program.name;
+
+            String ToSave = playerName + "." + playerScore;
+
+            String SavePath = "";
+
+            if (Program.difficulty == "Easy")
+            {
+                SavePath = "..\\SaveGames\\Easy.txt";
+            }
+
+            else if (Program.difficulty == "Medium")
+            {
+                SavePath = "..\\SaveGames\\Medium.txt";
+            }
+
+            else if (Program.difficulty == "Hard")
+            {
+                SavePath = "..\\SaveGames\\Hard.txt";
+            }
+            else
+            {
+                MessageBox.Show("ERROR: Unknown save file");
+            }
+
+            var sw = new StreamWriter(SavePath, true);
+            sw.Write(ToSave);
+            sw.Dispose();
+        }
 
         /** Controls the click events for the grid */
         private void BtnEvent_MouseUp(object sender, MouseEventArgs e)
@@ -261,7 +301,7 @@ namespace Grid_Game
 
                     //If there is no text on a button 
                     else if (((GridButton)sender).Text.Equals("1") == false && ((GridButton)sender).Text.Equals("2") == false
-                        && ((GridButton)sender).Text.Equals("3") == false)
+                        && ((GridButton)sender).Text.Equals("3") == false && ((GridButton)sender).Text.Equals("4") == false && ((GridButton)sender).Text.Equals("5") == false && ((GridButton)sender).Text.Equals("6") == false)
                     {
                         //Creating a temp variable to get the number of a row and column of that specific button
                         GridButton tempBtn = (GridButton)sender;
@@ -293,16 +333,40 @@ namespace Grid_Game
                         lowerGrid[tempBtn.row, tempBtn.column].BackColor = Color.LightGray;
                         ((GridButton)sender).BackColor = Color.LightGray;
                         ((GridButton)sender).ForeColor = Color.LightGray;
+
+                        if (text.Equals(((GridButton)sender).Text))
+                        {
+                            BombsToFind++;
+                        }
+
+                        if (BombsToFind == 0 && LblBombs.Text == "0")
+                        {
+                            TotalTimer.Stop();
+                            DisplayedTimer.Stop();
+                            winMessage();
+                        }
                     }
                     else if (((GridButton)sender).BackColor == Color.White); // do nothing as you cannot mark an opened field as a bomb
-                    else
+                    else if (LblBombs.Text != "0")
                     {
                         ((Button)sender).BackColor = Color.Red;
                         LblBombs.Text = Convert.ToString((Convert.ToInt32(LblBombs.Text) - 1));
                         
                         //Creating a temp variable to get the number of a row and a column of that specific button
                         GridButton tempBtn = (GridButton)sender;
-                        
+
+                        if (text.Equals(((GridButton)sender).Text))
+                        {
+                            BombsToFind--;
+                        }
+
+                        if (BombsToFind==0 && LblBombs.Text == "0")
+                        {
+                            TotalTimer.Stop();
+                            DisplayedTimer.Stop();
+                            winMessage();
+                        }
+
                         //Setting the color of a label which is under the button to be red so that when all cells are dispayed
                         // a player could see his/her "red flags"
                         lowerGrid[tempBtn.row, tempBtn.column].BackColor = Color.Red;
@@ -310,6 +374,7 @@ namespace Grid_Game
                         ((GridButton)sender).ForeColor = Color.Red;
                     
                     }
+
                         
 
                     break;
@@ -343,6 +408,23 @@ namespace Grid_Game
             }
         }
 
+        private void winMessage()
+        {
+            DialogResult result = MessageBox.Show("You won, would you like to save your score?", "WIN", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+            if (result == DialogResult.Yes)
+            {
+                saveData();
+            }
+            else if (result == DialogResult.No)
+            {
+            }
+            using (var MainMenuScreen = new MainMenu())
+            {
+                this.Hide();
+                MainMenuScreen.ShowDialog();
+            }
+        }
+
         //Displaying all bombs and numbers that are on a grid
         private void uncoverAllGrid()
         {
@@ -369,6 +451,11 @@ namespace Grid_Game
                 return;
             }
             //If a button contains a bomb indication or the button has been already revealed
+            if (btn[i,j].BackColor == Color.Red)
+            {
+                LblBombs.Text = Convert.ToString((Convert.ToInt32(LblBombs.Text) + 1));
+            }
+
             if (btn[i, j].Text.Equals("*") == true || btn[i, j].BackColor == Color.White)
                 return;
             //If there are more neighbours than 0, do not reveal more
