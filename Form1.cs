@@ -342,7 +342,7 @@ namespace Grid_Game
                         }
                     }
                     else if (((GridButton)sender).BackColor == Color.White); // do nothing as you cannot mark an opened field as a bomb
-                    else
+                    else if (LblBombs.Text != "0")
                     {
                         ((Button)sender).BackColor = Color.Red;
                         LblBombs.Text = Convert.ToString((Convert.ToInt32(LblBombs.Text) - 1));
@@ -369,6 +369,7 @@ namespace Grid_Game
                         ((GridButton)sender).ForeColor = Color.Red;
                     
                     }
+
                         
 
                     break;
