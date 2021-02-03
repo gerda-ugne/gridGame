@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Difficulty));
             this.EasyBtn = new System.Windows.Forms.Button();
             this.MedBtn = new System.Windows.Forms.Button();
             this.HardBtn = new System.Windows.Forms.Button();
@@ -35,61 +36,73 @@
             this.StartBtn = new System.Windows.Forms.Button();
             this.NameTextBox = new System.Windows.Forms.TextBox();
             this.EnterNameLbl = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.DiffTitleLbl = new System.Windows.Forms.Label();
+            this.NameTitleLbl = new System.Windows.Forms.Label();
             this.UpdateNameBtn = new System.Windows.Forms.Button();
             this.DifficultyLbl = new System.Windows.Forms.Label();
             this.NameLbl = new System.Windows.Forms.Label();
+            this.TitleImg = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleImg)).BeginInit();
             this.SuspendLayout();
             // 
             // EasyBtn
             // 
-            this.EasyBtn.Location = new System.Drawing.Point(267, 289);
+            this.EasyBtn.BackColor = System.Drawing.Color.BurlyWood;
+            this.EasyBtn.Font = new System.Drawing.Font("Molot", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EasyBtn.Location = new System.Drawing.Point(257, 291);
             this.EasyBtn.Name = "EasyBtn";
             this.EasyBtn.Size = new System.Drawing.Size(159, 62);
             this.EasyBtn.TabIndex = 0;
             this.EasyBtn.Text = "Easy";
-            this.EasyBtn.UseVisualStyleBackColor = true;
+            this.EasyBtn.UseVisualStyleBackColor = false;
             this.EasyBtn.Click += new System.EventHandler(this.EasyBtn_Click);
             // 
             // MedBtn
             // 
-            this.MedBtn.Location = new System.Drawing.Point(267, 375);
+            this.MedBtn.BackColor = System.Drawing.Color.BurlyWood;
+            this.MedBtn.Font = new System.Drawing.Font("Molot", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MedBtn.Location = new System.Drawing.Point(257, 372);
             this.MedBtn.Name = "MedBtn";
             this.MedBtn.Size = new System.Drawing.Size(159, 61);
             this.MedBtn.TabIndex = 1;
             this.MedBtn.Text = "Medium";
-            this.MedBtn.UseVisualStyleBackColor = true;
+            this.MedBtn.UseVisualStyleBackColor = false;
             this.MedBtn.Click += new System.EventHandler(this.MedBtn_Click);
             // 
             // HardBtn
             // 
-            this.HardBtn.Location = new System.Drawing.Point(267, 463);
+            this.HardBtn.BackColor = System.Drawing.Color.BurlyWood;
+            this.HardBtn.Font = new System.Drawing.Font("Molot", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HardBtn.Location = new System.Drawing.Point(257, 461);
             this.HardBtn.Name = "HardBtn";
             this.HardBtn.Size = new System.Drawing.Size(159, 61);
             this.HardBtn.TabIndex = 2;
             this.HardBtn.Text = "Hard";
-            this.HardBtn.UseVisualStyleBackColor = true;
+            this.HardBtn.UseVisualStyleBackColor = false;
             this.HardBtn.Click += new System.EventHandler(this.HardBtn_Click);
             // 
             // BackBtn
             // 
+            this.BackBtn.BackColor = System.Drawing.Color.BurlyWood;
+            this.BackBtn.Font = new System.Drawing.Font("Molot", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BackBtn.Location = new System.Drawing.Point(12, 12);
             this.BackBtn.Name = "BackBtn";
             this.BackBtn.Size = new System.Drawing.Size(62, 53);
             this.BackBtn.TabIndex = 3;
             this.BackBtn.Text = "Back";
-            this.BackBtn.UseVisualStyleBackColor = true;
+            this.BackBtn.UseVisualStyleBackColor = false;
             this.BackBtn.Click += new System.EventHandler(this.BackBtn_Click);
             // 
             // StartBtn
             // 
-            this.StartBtn.Location = new System.Drawing.Point(101, 593);
+            this.StartBtn.BackColor = System.Drawing.Color.BurlyWood;
+            this.StartBtn.Font = new System.Drawing.Font("Molot", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StartBtn.Location = new System.Drawing.Point(89, 592);
             this.StartBtn.Name = "StartBtn";
             this.StartBtn.Size = new System.Drawing.Size(488, 96);
             this.StartBtn.TabIndex = 4;
             this.StartBtn.Text = "Start Game";
-            this.StartBtn.UseVisualStyleBackColor = true;
+            this.StartBtn.UseVisualStyleBackColor = false;
             this.StartBtn.Click += new System.EventHandler(this.StartBtn_Click);
             // 
             // NameTextBox
@@ -97,68 +110,87 @@
             this.NameTextBox.Location = new System.Drawing.Point(363, 130);
             this.NameTextBox.MaxLength = 3;
             this.NameTextBox.Name = "NameTextBox";
-            this.NameTextBox.Size = new System.Drawing.Size(78, 20);
+            this.NameTextBox.Size = new System.Drawing.Size(106, 20);
             this.NameTextBox.TabIndex = 5;
             // 
             // EnterNameLbl
             // 
             this.EnterNameLbl.AutoSize = true;
-            this.EnterNameLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EnterNameLbl.Location = new System.Drawing.Point(251, 131);
+            this.EnterNameLbl.Font = new System.Drawing.Font("Molot", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EnterNameLbl.ForeColor = System.Drawing.Color.Linen;
+            this.EnterNameLbl.Location = new System.Drawing.Point(154, 126);
             this.EnterNameLbl.Name = "EnterNameLbl";
-            this.EnterNameLbl.Size = new System.Drawing.Size(106, 16);
+            this.EnterNameLbl.Size = new System.Drawing.Size(181, 24);
             this.EnterNameLbl.TabIndex = 6;
             this.EnterNameLbl.Text = "Enter Nickname:";
             // 
-            // label1
+            // DiffTitleLbl
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(277, 239);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(135, 33);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Difficulty:";
+            this.DiffTitleLbl.AutoSize = true;
+            this.DiffTitleLbl.Font = new System.Drawing.Font("Molot", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DiffTitleLbl.ForeColor = System.Drawing.Color.Linen;
+            this.DiffTitleLbl.Location = new System.Drawing.Point(251, 239);
+            this.DiffTitleLbl.Name = "DiffTitleLbl";
+            this.DiffTitleLbl.Size = new System.Drawing.Size(168, 33);
+            this.DiffTitleLbl.TabIndex = 7;
+            this.DiffTitleLbl.Text = "Difficulty:";
             // 
-            // label2
+            // NameTitleLbl
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(295, 68);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(101, 33);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "Name:";
+            this.NameTitleLbl.AutoSize = true;
+            this.NameTitleLbl.Font = new System.Drawing.Font("Molot", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NameTitleLbl.ForeColor = System.Drawing.Color.Linen;
+            this.NameTitleLbl.Location = new System.Drawing.Point(83, 60);
+            this.NameTitleLbl.Name = "NameTitleLbl";
+            this.NameTitleLbl.Size = new System.Drawing.Size(532, 33);
+            this.NameTitleLbl.TabIndex = 8;
+            this.NameTitleLbl.Text = "Prepare for a new mining journey";
+            this.NameTitleLbl.Click += new System.EventHandler(this.label2_Click);
             // 
             // UpdateNameBtn
             // 
-            this.UpdateNameBtn.Location = new System.Drawing.Point(301, 178);
+            this.UpdateNameBtn.BackColor = System.Drawing.Color.BurlyWood;
+            this.UpdateNameBtn.Font = new System.Drawing.Font("Molot", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UpdateNameBtn.Location = new System.Drawing.Point(257, 181);
             this.UpdateNameBtn.Name = "UpdateNameBtn";
-            this.UpdateNameBtn.Size = new System.Drawing.Size(93, 23);
+            this.UpdateNameBtn.Size = new System.Drawing.Size(159, 37);
             this.UpdateNameBtn.TabIndex = 9;
             this.UpdateNameBtn.Text = "Change Name";
-            this.UpdateNameBtn.UseVisualStyleBackColor = true;
+            this.UpdateNameBtn.UseVisualStyleBackColor = false;
             this.UpdateNameBtn.Click += new System.EventHandler(this.UpdateNameBtn_Click);
             // 
             // DifficultyLbl
             // 
             this.DifficultyLbl.AutoSize = true;
-            this.DifficultyLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DifficultyLbl.Font = new System.Drawing.Font("Molot", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DifficultyLbl.ForeColor = System.Drawing.Color.Linen;
             this.DifficultyLbl.Location = new System.Drawing.Point(96, 565);
             this.DifficultyLbl.Name = "DifficultyLbl";
-            this.DifficultyLbl.Size = new System.Drawing.Size(100, 25);
+            this.DifficultyLbl.Size = new System.Drawing.Size(120, 24);
             this.DifficultyLbl.TabIndex = 10;
             this.DifficultyLbl.Text = "Difficulty:";
             // 
             // NameLbl
             // 
             this.NameLbl.AutoSize = true;
-            this.NameLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NameLbl.Location = new System.Drawing.Point(455, 565);
+            this.NameLbl.Font = new System.Drawing.Font("Molot", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NameLbl.ForeColor = System.Drawing.Color.Linen;
+            this.NameLbl.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.NameLbl.Location = new System.Drawing.Point(507, 565);
             this.NameLbl.Name = "NameLbl";
-            this.NameLbl.Size = new System.Drawing.Size(74, 25);
+            this.NameLbl.Size = new System.Drawing.Size(70, 24);
             this.NameLbl.TabIndex = 11;
             this.NameLbl.Text = "Name:";
+            // 
+            // TitleImg
+            // 
+            this.TitleImg.Image = ((System.Drawing.Image)(resources.GetObject("TitleImg.Image")));
+            this.TitleImg.Location = new System.Drawing.Point(0, 0);
+            this.TitleImg.Name = "TitleImg";
+            this.TitleImg.Size = new System.Drawing.Size(691, 708);
+            this.TitleImg.TabIndex = 12;
+            this.TitleImg.TabStop = false;
+            this.TitleImg.Click += new System.EventHandler(this.TitleImg_Click);
             // 
             // Difficulty
             // 
@@ -168,8 +200,8 @@
             this.Controls.Add(this.NameLbl);
             this.Controls.Add(this.DifficultyLbl);
             this.Controls.Add(this.UpdateNameBtn);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.NameTitleLbl);
+            this.Controls.Add(this.DiffTitleLbl);
             this.Controls.Add(this.EnterNameLbl);
             this.Controls.Add(this.NameTextBox);
             this.Controls.Add(this.StartBtn);
@@ -177,10 +209,12 @@
             this.Controls.Add(this.HardBtn);
             this.Controls.Add(this.MedBtn);
             this.Controls.Add(this.EasyBtn);
+            this.Controls.Add(this.TitleImg);
             this.Name = "Difficulty";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Difficulty";
             this.Load += new System.EventHandler(this.Difficulty_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.TitleImg)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -195,10 +229,11 @@
         private System.Windows.Forms.Button StartBtn;
         private System.Windows.Forms.TextBox NameTextBox;
         private System.Windows.Forms.Label EnterNameLbl;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label DiffTitleLbl;
+        private System.Windows.Forms.Label NameTitleLbl;
         private System.Windows.Forms.Button UpdateNameBtn;
         private System.Windows.Forms.Label DifficultyLbl;
         private System.Windows.Forms.Label NameLbl;
+        private System.Windows.Forms.PictureBox TitleImg;
     }
 }

@@ -15,6 +15,20 @@ namespace Grid_Game
         public Difficulty()
         {
             InitializeComponent();
+            /** Assinging image as a parent to hide the background of the labels*/
+            this.NameTitleLbl.Parent = this.TitleImg;
+            this.NameLbl.Parent = this.TitleImg;
+            this.DiffTitleLbl.Parent = this.TitleImg;
+            this.DifficultyLbl.Parent = this.TitleImg;
+            this.EnterNameLbl.Parent = this.TitleImg;
+
+
+            this.NameTitleLbl.BackColor = Color.Transparent;
+            this.NameLbl.BackColor = Color.Transparent;
+            this.DiffTitleLbl.BackColor = Color.Transparent;
+            this.DifficultyLbl.BackColor = Color.Transparent;
+            this.EnterNameLbl.BackColor = Color.Transparent;
+
         }
 
         private void BackBtn_Click(object sender, EventArgs e)
@@ -53,7 +67,7 @@ namespace Grid_Game
             }
             else
             {
-                MessageBox.Show("You need to enter a name");
+                MessageBox.Show("You need to enter a name", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -87,11 +101,11 @@ namespace Grid_Game
             }
             else if (Program.name == "")
             {
-                MessageBox.Show("You need to enter a name");
+                MessageBox.Show("You need to enter a name.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                MessageBox.Show("You need to select a difficulty");
+                MessageBox.Show("You need to select a difficulty.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -100,6 +114,17 @@ namespace Grid_Game
             Program.name = "";
             Program.difficulty = "";
         }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TitleImg_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
 
