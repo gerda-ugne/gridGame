@@ -299,6 +299,7 @@ namespace Grid_Game
                         lowerGrid[tempBtn.row, tempBtn.column].BackColor = Color.LightGray;
                         ((GridButton)sender).BackColor = Color.LightGray;
                         ((GridButton)sender).ForeColor = Color.LightGray;
+
                         if (text.Equals(((GridButton)sender).Text))
                         {
                             BombsToFind++;
@@ -394,6 +395,11 @@ namespace Grid_Game
                 return;
             }
             //If a button contains a bomb indication or the button has been already revealed
+            if (btn[i,j].BackColor == Color.Red)
+            {
+                LblBombs.Text = Convert.ToString((Convert.ToInt32(LblBombs.Text) + 1));
+            }
+
             if (btn[i, j].Text.Equals("*") == true || btn[i, j].BackColor == Color.White)
                 return;
             //If there are more neighbours than 0, do not reveal more
