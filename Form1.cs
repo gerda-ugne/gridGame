@@ -29,8 +29,8 @@ namespace Grid_Game
         Label LblBombs = new Label();
 
         //The 2D grid 
-        static int width = 10;
-        static int length = 10;
+        static int width = 18;
+        static int length = 18;
         //The buttons are of a GridButton data type
         GridButton[,] btn = new GridButton[width, length];
 
@@ -71,7 +71,7 @@ namespace Grid_Game
                     btn[i, j] = new GridButton(i, j);
                     btn[i, j].row = i;
                     btn[i, j].column = j;
-                    btn[i, j].SetBounds(90 + (50 * i), 100 + (50 * j), 45, 45);
+                    btn[i, j].SetBounds(70 + (30 * i), 100 + (30 * j), 35, 35);
                     btn[i, j].BackColor = Color.LightGray;
 
                     btn[i, j].MouseUp += new MouseEventHandler(this.BtnEvent_MouseUp);
@@ -89,7 +89,7 @@ namespace Grid_Game
             LblTimer.TextAlign = ContentAlignment.MiddleRight;
             LblTimer.BackColor = Color.Black;
             LblTimer.ForeColor = Color.Red;
-            LblTimer.Font = new Font("Calibri", 40);
+            LblTimer.Font = new Font("Molot", 40);
             this.Controls.Add(LblTimer);
 
             /** Customizing bombs label*/
@@ -99,7 +99,7 @@ namespace Grid_Game
             LblBombs.TextAlign = ContentAlignment.MiddleLeft;
             LblBombs.BackColor = Color.Black;
             LblBombs.ForeColor = Color.Red;
-            LblBombs.Font = new Font("Calibri", 40);
+            LblBombs.Font = new Font("Molot", 40);
             this.Controls.Add(LblBombs);
 
             TotalTimer.Start();
@@ -121,7 +121,7 @@ namespace Grid_Game
                 for (int j = 0; j < lowerGrid.GetLength(1); j++)
                 {
                     lowerGrid[i, j] = new Label();
-                    lowerGrid[i, j].SetBounds(90 + (50 * i), 100 + (50 * j), 45, 45);
+                    lowerGrid[i, j].SetBounds(70 + (30 * i), 100 + (30 * j), 35, 35);
                     lowerGrid[i, j].BackColor = Color.White;
                     Controls.Add(lowerGrid[i, j]);
                 }
@@ -392,7 +392,6 @@ namespace Grid_Game
         {
            
         }
-
 
     }
 }

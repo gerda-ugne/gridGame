@@ -190,6 +190,7 @@
             this.TitleImg.Size = new System.Drawing.Size(691, 708);
             this.TitleImg.TabIndex = 12;
             this.TitleImg.TabStop = false;
+            this.TitleImg.Click += new System.EventHandler(this.TitleImg_Click);
             // 
             // Difficulty
             // 

@@ -119,6 +119,12 @@ namespace Grid_Game
         {
 
         }
+
+        private void TitleImg_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
 

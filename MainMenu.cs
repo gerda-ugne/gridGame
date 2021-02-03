@@ -16,6 +16,8 @@ namespace Grid_Game
     {
 
         System.Media.SoundPlayer player = new System.Media.SoundPlayer("African Safari Loop.wav");
+        bool isPlaying = true;
+
         public MainMenu()
         {
             InitializeComponent();
@@ -72,7 +74,24 @@ namespace Grid_Game
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Magawa has been sent on a mission to clear a newly found area of mines. To help Magawa, you must figure out where the mines are by clearing the rest of the fields. Any field you click on may contain one of the following: a number, a mine or nothing. The number indicates how many mines there are in the neighbouring fields. Activating a mine results in a game over - although the mine can support Magawa's weight, you're a bit too heavy. Finish the game by clearing all the fields, free of mines. To make it easier for you, you can mark the suspected minefields by right-clicking them. The timer is limited to 999 seconds, so make sure you disarm all the mines before the time runs out. The number in the top-left corner will help you track the amount of mines you've marked. Best of luck, don't disappoint Magawa!", "How To Play", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            MessageBox.Show("Magawa has been sent on a mission to clear a newly found area of mines. To help Magawa, you must figure out where the mines are by clearing the empty fields. Any field you click on may contain one of the following: a number, a mine or it may be empty. The number indicates how many mines there are in the neighbouring fields. Activating a mine results in a game over - although the mine can support Magawa's weight, that's unilkely for you! Finish the game by clearing all the fields free of mines. To make it easier for you, you can mark the suspected minefields by right-clicking them. The timer is limited to 999 seconds, so make sure you disarm all the mines before the time runs out. The number in the top-left corner will help you track the amount of mines you've marked. Best of luck, don't disappoint Magawa!", "How To Play", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+        }
+
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (isPlaying)
+            {
+                player.Stop();
+                button2.BackgroundImage = Image.FromFile("unmute.png");
+                isPlaying = false;
+            }
+            else
+            {
+                isPlaying = true;
+                player.PlayLooping();
+                button2.BackgroundImage = Image.FromFile("mute.png");
+            }
         }
     }
 }
