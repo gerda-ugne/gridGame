@@ -8,6 +8,10 @@ namespace Grid_Game
 {
     static class Program
     {
+        public static string difficulty = "";
+        public static string name = "";
+        public static int BombAmountSet =  10;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -16,7 +20,7 @@ namespace Grid_Game
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Minesweeper());
+            Application.Run(new MainMenu());
         }
     }
 }

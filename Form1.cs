@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,9 +23,9 @@ namespace Grid_Game
         System.Windows.Forms.Timer TotalTimer;
         System.Windows.Forms.Timer DisplayedTimer;
 
-        private int elapsedSeconds = 0;
-        int bombAmount = 10;
+        private int elapsedSeconds = 999;
 
+        int bombAmount = Program.BombAmountSet;
         //Label to display the time
         Label LblTimer = new Label();
         //Label to display bombs left
@@ -32,6 +34,7 @@ namespace Grid_Game
         //The 2D grid 
         static int width = 10;
         static int length = 10;
+        int BombsToFind = Program.BombAmountSet;
         //The buttons are of a GridButton data type
         GridButton[,] btn = new GridButton[width, length];
 
@@ -53,11 +56,11 @@ namespace Grid_Game
             //Displayed timer shows the current elapsed seconds to the player
             DisplayedTimer = new System.Windows.Forms.Timer();
 
-            TotalTimer.Interval = 9990000;
+            //TotalTimer.Interval = 9990000;
             DisplayedTimer.Interval = 1000;
 
             //Event handlers for handling timer ticks
-            TotalTimer.Tick += new EventHandler(TotalTimer_Tick);
+            //TotalTimer.Tick += new EventHandler(TotalTimer_Tick);
             DisplayedTimer.Tick += new EventHandler(DisplayedTimer_Tick);
 
             /** Customizing grid */
@@ -80,7 +83,7 @@ namespace Grid_Game
 
             /** Customizing timer label*/
 
-            LblTimer.Text = "000";
+            LblTimer.Text = "999";
             LblTimer.Location = new Point(565, 0);
             LblTimer.Size = new Size(120, 80);
             LblTimer.TextAlign = ContentAlignment.MiddleRight;
@@ -108,6 +111,8 @@ namespace Grid_Game
             generateGridOfLabels();
             placeBombs();
             placeNumbers();
+
+          
         }
 
         //Generating a layer of labels that are located under the buttons
@@ -128,19 +133,25 @@ namespace Grid_Game
         /**Displays the current elapsed time to the player.*/
         private void DisplayedTimer_Tick(object sender, EventArgs e)
         {
-            elapsedSeconds++;
+            elapsedSeconds--;
             LblTimer.Text = Convert.ToString(elapsedSeconds);
+            if (elapsedSeconds == 0)
+            {
+                TotalTimer.Stop();
+                DisplayedTimer.Stop();
+                gameOver();
+            }
         }
 
 
         /** Event that happens once the timer reaches the limit of time given*/
-        private void TotalTimer_Tick(object sender, EventArgs e)
-        {
-            TotalTimer.Stop();
-            DisplayedTimer.Stop();
+        //private void TotalTimer_Tick(object sender, EventArgs e)
+       // {
+          //  TotalTimer.Stop();
+          //  DisplayedTimer.Stop();
 
-            DialogResult result = MessageBox.Show("Time is due. Would you like to try again ?", "Time's up", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
-        }
+          //  DialogResult result = MessageBox.Show("Time is due. Would you like to try again ?", "Time's up", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
+       // }
 
         /** Randomly placing bombs on a grid*/
         private void placeBombs()
@@ -153,8 +164,8 @@ namespace Grid_Game
             //on a grid
             while (x < bombAmount)
             {
-                k = r.Next(bombAmount-1);
-                l = r.Next(bombAmount-1);
+                k = r.Next(width-1);
+                l = r.Next(length-1);
 
                 //checking if there is an image already under the button
                 //if yes, skip the following steps
@@ -221,6 +232,39 @@ namespace Grid_Game
             }
         }
 
+        /** Check that all bombs are covered by red squares**/
+        private void saveData() 
+        {
+            String playerScore = LblTimer.Text;
+            String playerName = Program.name;
+
+            String ToSave = playerName + "." + playerScore;
+
+            String SavePath = "";
+
+            if (Program.difficulty == "Easy")
+            {
+                SavePath = "..\\SaveGames\\Easy.txt";
+            }
+
+            else if (Program.difficulty == "Medium")
+            {
+                SavePath = "..\\SaveGames\\Medium.txt";
+            }
+
+            else if (Program.difficulty == "Hard")
+            {
+                SavePath = "..\\SaveGames\\Hard.txt";
+            }
+            else
+            {
+                MessageBox.Show("ERROR: Unknown save file");
+            }
+
+            var sw = new StreamWriter(SavePath, true);
+            sw.Write(ToSave);
+            sw.Dispose();
+        }
 
         /** Controls the click events for the grid */
         private void BtnEvent_MouseUp(object sender, MouseEventArgs e)
@@ -252,7 +296,7 @@ namespace Grid_Game
 
                     //If there is no text on a button 
                     else if (((GridButton)sender).Text.Equals("1") == false && ((GridButton)sender).Text.Equals("2") == false
-                        && ((GridButton)sender).Text.Equals("3") == false)
+                        && ((GridButton)sender).Text.Equals("3") == false && ((GridButton)sender).Text.Equals("4") == false && ((GridButton)sender).Text.Equals("5") == false && ((GridButton)sender).Text.Equals("6") == false)
                     {
                         //Creating a temp variable to get the number of a row and column of that specific button
                         GridButton tempBtn = (GridButton)sender;
@@ -284,16 +328,40 @@ namespace Grid_Game
                         lowerGrid[tempBtn.row, tempBtn.column].BackColor = Color.LightGray;
                         ((GridButton)sender).BackColor = Color.LightGray;
                         ((GridButton)sender).ForeColor = Color.LightGray;
+
+                        if (text.Equals(((GridButton)sender).Text))
+                        {
+                            BombsToFind++;
+                        }
+
+                        if (BombsToFind == 0 && LblBombs.Text == "0")
+                        {
+                            TotalTimer.Stop();
+                            DisplayedTimer.Stop();
+                            winMessage();
+                        }
                     }
-                    else if (((GridButton)sender).BackColor == Color.White) ; // do nothing as you cannot mark an opened field as a bomb
-                    else
+                    else if (((GridButton)sender).BackColor == Color.White); // do nothing as you cannot mark an opened field as a bomb
+                    else if (LblBombs.Text != "0")
                     {
                         ((Button)sender).BackColor = Color.Red;
                         LblBombs.Text = Convert.ToString((Convert.ToInt32(LblBombs.Text) - 1));
                         
                         //Creating a temp variable to get the number of a row and a column of that specific button
                         GridButton tempBtn = (GridButton)sender;
-                        
+
+                        if (text.Equals(((GridButton)sender).Text))
+                        {
+                            BombsToFind--;
+                        }
+
+                        if (BombsToFind==0 && LblBombs.Text == "0")
+                        {
+                            TotalTimer.Stop();
+                            DisplayedTimer.Stop();
+                            winMessage();
+                        }
+
                         //Setting the color of a label which is under the button to be red so that when all cells are dispayed
                         // a player could see his/her "red flags"
                         lowerGrid[tempBtn.row, tempBtn.column].BackColor = Color.Red;
@@ -301,6 +369,7 @@ namespace Grid_Game
                         ((GridButton)sender).ForeColor = Color.Red;
                     
                     }
+
                         
 
                     break;
@@ -315,6 +384,40 @@ namespace Grid_Game
             uncoverAllGrid();
             DisplayedTimer.Stop();
             TotalTimer.Stop();
+            DialogResult result = MessageBox.Show("Would you like to try again ?", "Game Over", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
+            if (result == DialogResult.Retry)
+            {
+                using (var GameForm = new Minesweeper())
+                {
+                    this.Hide();
+                    GameForm.ShowDialog();
+                }
+            }
+            else if (result == DialogResult.Cancel)
+            {
+                using (var MainMenuScreen = new MainMenu())
+                {
+                    this.Hide();
+                    MainMenuScreen.ShowDialog();
+                }
+            }
+        }
+
+        private void winMessage()
+        {
+            DialogResult result = MessageBox.Show("You won, would you like to save your score?", "WIN", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+            if (result == DialogResult.Yes)
+            {
+                saveData();
+            }
+            else if (result == DialogResult.No)
+            {
+            }
+            using (var MainMenuScreen = new MainMenu())
+            {
+                this.Hide();
+                MainMenuScreen.ShowDialog();
+            }
         }
 
         //Displaying all bombs and numbers that are on a grid
@@ -343,6 +446,11 @@ namespace Grid_Game
                 return;
             }
             //If a button contains a bomb indication or the button has been already revealed
+            if (btn[i,j].BackColor == Color.Red)
+            {
+                LblBombs.Text = Convert.ToString((Convert.ToInt32(LblBombs.Text) + 1));
+            }
+
             if (btn[i, j].Text.Equals("*") == true || btn[i, j].BackColor == Color.White)
                 return;
             //If there are more neighbours than 0, do not reveal more
@@ -364,7 +472,7 @@ namespace Grid_Game
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+           
         }
 
 
