@@ -494,5 +494,20 @@ namespace Grid_Game
            
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (Program.isPlaying)
+            {
+                Program.player.Stop();
+                button2.BackgroundImage = Image.FromFile("unmute.png");
+                Program.isPlaying = false;
+            }
+            else
+            {
+                Program.isPlaying = true;
+                Program.player.PlayLooping();
+                button2.BackgroundImage = Image.FromFile("mute.png");
+            }
+        }
     }
 }

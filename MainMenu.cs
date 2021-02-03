@@ -15,15 +15,12 @@ namespace Grid_Game
     public partial class MainMenu : Form
     {
 
-        System.Media.SoundPlayer player = new System.Media.SoundPlayer("African Safari Loop.wav");
-        bool isPlaying = true;
-
         public MainMenu()
         {
             InitializeComponent();
             this.TitleLbl.Parent = this.TitleImg;
             this.TitleLbl.BackColor = Color.Transparent;
-            player.PlayLooping();
+            Program.player.PlayLooping();
 
 
         }
@@ -48,7 +45,7 @@ namespace Grid_Game
 
         private void ExitBtn_Click(object sender, EventArgs e)
         {
-            player.Stop();
+            Program.player.Stop();
             Application.Exit();
         }
 
@@ -80,16 +77,16 @@ namespace Grid_Game
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (isPlaying)
+            if (Program.isPlaying)
             {
-                player.Stop();
+                Program.player.Stop();
                 button2.BackgroundImage = Image.FromFile("unmute.png");
-                isPlaying = false;
+                Program.isPlaying = false;
             }
             else
             {
-                isPlaying = true;
-                player.PlayLooping();
+                Program.isPlaying = true;
+                Program.player.PlayLooping();
                 button2.BackgroundImage = Image.FromFile("mute.png");
             }
         }
