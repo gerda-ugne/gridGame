@@ -32,6 +32,7 @@ namespace Grid_Game
         //The 2D grid 
         static int width = 10;
         static int length = 10;
+        int BombsToFind = Program.BombAmountSet;
         //The buttons are of a GridButton data type
         GridButton[,] btn = new GridButton[width, length];
 
@@ -108,6 +109,8 @@ namespace Grid_Game
             generateGridOfLabels();
             placeBombs();
             placeNumbers();
+
+          
         }
 
         //Generating a layer of labels that are located under the buttons
@@ -227,6 +230,12 @@ namespace Grid_Game
             }
         }
 
+        /** Check that all bombs are covered by red squares**/
+        private void checkBombs() 
+        {
+            int totalBombs = Program.BombAmountSet;
+            
+        }
 
         /** Controls the click events for the grid */
         private void BtnEvent_MouseUp(object sender, MouseEventArgs e)
@@ -290,6 +299,15 @@ namespace Grid_Game
                         lowerGrid[tempBtn.row, tempBtn.column].BackColor = Color.LightGray;
                         ((GridButton)sender).BackColor = Color.LightGray;
                         ((GridButton)sender).ForeColor = Color.LightGray;
+                        if (text.Equals(((GridButton)sender).Text))
+                        {
+                            BombsToFind++;
+                        }
+
+                        if (BombsToFind == 0 && LblBombs.Text == "0")
+                        {
+                            MessageBox.Show("YOU WON");
+                        }
                     }
                     else if (((GridButton)sender).BackColor == Color.White); // do nothing as you cannot mark an opened field as a bomb
                     else
@@ -299,7 +317,17 @@ namespace Grid_Game
                         
                         //Creating a temp variable to get the number of a row and a column of that specific button
                         GridButton tempBtn = (GridButton)sender;
-                        
+
+                        if (text.Equals(((GridButton)sender).Text))
+                        {
+                            BombsToFind--;
+                        }
+
+                        if (BombsToFind==0 && LblBombs.Text == "0")
+                        {
+                            MessageBox.Show("YOU WON");
+                        }
+
                         //Setting the color of a label which is under the button to be red so that when all cells are dispayed
                         // a player could see his/her "red flags"
                         lowerGrid[tempBtn.row, tempBtn.column].BackColor = Color.Red;
