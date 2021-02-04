@@ -17,7 +17,7 @@ namespace Grid_Game
     public partial class Minesweeper : Form
     {
 
-       
+
         //Initialize a timer for the game
         System.Windows.Forms.Timer TotalTimer;
         System.Windows.Forms.Timer DisplayedTimer;
@@ -42,8 +42,12 @@ namespace Grid_Game
         //A grid under the buttons
         Label[,] lowerGrid = new Label[width, length];
         //Bomb image
-        Image img = Image.FromFile("b.png");
+        Image img = Image.FromFile("b1.png");
         Random r = new Random();
+
+        int clickCounter = 0;
+        Button btnFace = new Button();
+
 
 
         public Minesweeper()
@@ -76,7 +80,7 @@ namespace Grid_Game
                     btn[i, j] = new GridButton(i, j);
                     btn[i, j].row = i;
                     btn[i, j].column = j;
-                    btn[i, j].SetBounds(70 + (30 * i), 100 + (30 * j), 35, 35);
+                    btn[i, j].SetBounds(70 + (30 * i), 100 + (30 * j), 30, 30);
                     btn[i, j].BackColor = Color.LightGray;
 
                     btn[i, j].MouseUp += new MouseEventHandler(this.BtnEvent_MouseUp);
@@ -113,14 +117,40 @@ namespace Grid_Game
             //lblTime.Text = "You have cleared the minefield in " + stopwatch.Elapsed.Seconds.ToString() + "seconds."; 
 
 
-            generateGridOfLabels();
-            placeBombs();
-            placeNumbers();
+            //Customizing "Smiley face" button
+            btnFace.Size = new Size(45, 45);
+            btnFace.Location = new Point(305, 20);
 
-          
+            btnFace.Image = Image.FromFile("smiley.png");
+            btnFace.FlatStyle = FlatStyle.Flat;
+
+            btnFace.BackColor = Color.Transparent;
+            btnFace.FlatAppearance.BorderSize = 0;
+
+            btnFace.Click += new EventHandler(this.btnFaceEvent_Click);
+            btnFace.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            btnFace.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            Controls.Add(btnFace);
+
+            generateGridOfLabels();
+
+
         }
 
-        //Generating a layer of labels that are located under the buttons
+
+        /** Restarting a game after clicking on a face button */
+        public void btnFaceEvent_Click(object sender, EventArgs e)
+        {
+            ((Button)sender).BackColor = Color.Transparent;
+            using (var GameForm = new Minesweeper())
+            {
+                this.Hide();
+                GameForm.ShowDialog();
+            }
+
+        }
+
+        /** Generating a layer of labels that are located under the buttons  */
         private void generateGridOfLabels()
         {
             for (int i = 0; i < lowerGrid.GetLength(0); i++)
@@ -128,7 +158,7 @@ namespace Grid_Game
                 for (int j = 0; j < lowerGrid.GetLength(1); j++)
                 {
                     lowerGrid[i, j] = new Label();
-                    lowerGrid[i, j].SetBounds(70 + (30 * i), 100 + (30 * j), 35, 35);
+                    lowerGrid[i, j].SetBounds(70 + (30 * i), 100 + (30 * j), 30, 30);
                     lowerGrid[i, j].BackColor = Color.White;
                     Controls.Add(lowerGrid[i, j]);
                 }
@@ -151,15 +181,15 @@ namespace Grid_Game
 
         /** Event that happens once the timer reaches the limit of time given*/
         //private void TotalTimer_Tick(object sender, EventArgs e)
-       // {
-          //  TotalTimer.Stop();
-          //  DisplayedTimer.Stop();
+        // {
+        //  TotalTimer.Stop();
+        //  DisplayedTimer.Stop();
 
-          //  DialogResult result = MessageBox.Show("Time is due. Would you like to try again ?", "Time's up", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
-       // }
+        //  DialogResult result = MessageBox.Show("Time is due. Would you like to try again ?", "Time's up", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
+        // }
 
         /** Randomly placing bombs on a grid*/
-        private void placeBombs()
+        private void placeBombs(int row, int col)
         {
 
             int x = 0;
@@ -169,16 +199,17 @@ namespace Grid_Game
             //on a grid
             while (x < bombAmount)
             {
-                k = r.Next(width-1);
-                l = r.Next(length-1);
+                k = r.Next(width - 1);
+                l = r.Next(length - 1);
 
                 //checking if there is an image already under the button
                 //if yes, skip the following steps
-                if (btn[k, l].Text.Equals("*"))
+                if (btn[k, l].Text.Equals("*") || (k == row && l == col))
                     continue;
 
                 //putting an image under the button
                 lowerGrid[k, l].Image = img;
+                lowerGrid[k, l].BackColor = Color.Transparent;
                 //adding a text (text color is the same as the color of a button) that is not visible on a button indicating
                 //an existence of a bomb under that particular button
                 btn[k, l].Text = "*";
@@ -187,7 +218,7 @@ namespace Grid_Game
                 x++;
 
             }
-            
+
         }
 
         /** Counts the neighbours that have bombs around each cell*/
@@ -199,9 +230,9 @@ namespace Grid_Game
             if (btn[x, y].Text == "*") return -1;
 
             //Else count every bomb around the cell
-            for (int i = x - 1; i <= x+1; i++)
+            for (int i = x - 1; i <= x + 1; i++)
             {
-                for(int j = y-1; j <= y+1; j++)
+                for (int j = y - 1; j <= y + 1; j++)
                 {
                     if (i < 0 || j < 0 || i >= width || j >= length) continue; //avoiding out of boundaries
                     if (btn[i, j].Text == "*") totalNeighbours++;
@@ -216,10 +247,10 @@ namespace Grid_Game
         /** Placing numbers that indicate bombs on the grid*/
         private void placeNumbers()
         {
-           int neighbourBombs = 0;
-           for(int i = 0; i < btn.GetLength(0); i++)
+            int neighbourBombs = 0;
+            for (int i = 0; i < btn.GetLength(0); i++)
             {
-                for(int j = 0; j < btn.GetLength(1); j++)
+                for (int j = 0; j < btn.GetLength(1); j++)
                 {
                     neighbourBombs = countNeighbours(i, j);
                     Console.WriteLine(neighbourBombs);
@@ -238,7 +269,7 @@ namespace Grid_Game
         }
 
         /** Check that all bombs are covered by red squares**/
-        private void saveData() 
+        private void saveData()
         {
             String playerScore = LblTimer.Text;
             String playerName = Program.name;
@@ -276,6 +307,7 @@ namespace Grid_Game
         {
             //A text indication of a button that there is a bomb under itself
             string text = "*";
+            clickCounter++;
 
             switch (e.Button)
             {
@@ -286,7 +318,7 @@ namespace Grid_Game
                     if (((GridButton)sender).BackColor == Color.Red)
                     {
                         //If the marked field had a bomb
-                        if(((GridButton)sender).Text == "*") gameOver();
+                        if (((GridButton)sender).Text == "*") gameOver();
 
                         ((GridButton)sender).BackColor = Color.White;
                         ((GridButton)sender).ForeColor = Color.DarkViolet;
@@ -296,12 +328,13 @@ namespace Grid_Game
                     //If a button has an indication of a bomb
                     else if (text.Equals(((GridButton)sender).Text))
                     {
+                        ((GridButton)sender).Hide();
                         gameOver();
                     }
 
                     //If there is no text on a button 
                     else if (((GridButton)sender).Text.Equals("1") == false && ((GridButton)sender).Text.Equals("2") == false
-                        && ((GridButton)sender).Text.Equals("3") == false && ((GridButton)sender).Text.Equals("4") == false && ((GridButton)sender).Text.Equals("5") == false && ((GridButton)sender).Text.Equals("6") == false)
+                        && ((GridButton)sender).Text.Equals("3") == false && ((GridButton)sender).Text.Equals("4") == false && ((GridButton)sender).Text.Equals("5") == false && ((GridButton)sender).Text.Equals("6") == false && clickCounter != 1)
                     {
                         //Creating a temp variable to get the number of a row and column of that specific button
                         GridButton tempBtn = (GridButton)sender;
@@ -346,12 +379,12 @@ namespace Grid_Game
                             winMessage();
                         }
                     }
-                    else if (((GridButton)sender).BackColor == Color.White); // do nothing as you cannot mark an opened field as a bomb
+                    else if (((GridButton)sender).BackColor == Color.White) ; // do nothing as you cannot mark an opened field as a bomb
                     else if (LblBombs.Text != "0")
                     {
                         ((Button)sender).BackColor = Color.Red;
                         LblBombs.Text = Convert.ToString((Convert.ToInt32(LblBombs.Text) - 1));
-                        
+
                         //Creating a temp variable to get the number of a row and a column of that specific button
                         GridButton tempBtn = (GridButton)sender;
 
@@ -360,7 +393,7 @@ namespace Grid_Game
                             BombsToFind--;
                         }
 
-                        if (BombsToFind==0 && LblBombs.Text == "0")
+                        if (BombsToFind == 0 && LblBombs.Text == "0")
                         {
                             TotalTimer.Stop();
                             DisplayedTimer.Stop();
@@ -372,33 +405,35 @@ namespace Grid_Game
                         lowerGrid[tempBtn.row, tempBtn.column].BackColor = Color.Red;
                         ((GridButton)sender).BackColor = Color.Red;
                         ((GridButton)sender).ForeColor = Color.Red;
-                    
+
                     }
 
-                        
 
                     break;
 
             }
+            if (clickCounter == 1)
+            {
+                GridButton tempBtn = (GridButton)sender;
+
+                placeBombs(tempBtn.row, tempBtn.column);
+                placeNumbers();
+            }
+
 
         }
 
         /** Method is called when the game ends.*/
         private void gameOver()
         {
+
+            btnFace.Image = Image.FromFile("sad.png");
+
             uncoverAllGrid();
             DisplayedTimer.Stop();
             TotalTimer.Stop();
-            DialogResult result = MessageBox.Show("Would you like to try again ?", "Game Over", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
-            if (result == DialogResult.Retry)
-            {
-                using (var GameForm = new Minesweeper())
-                {
-                    this.Hide();
-                    GameForm.ShowDialog();
-                }
-            }
-            else if (result == DialogResult.Cancel)
+            DialogResult result = MessageBox.Show("Would you like to go to the main menu ?", "Game Over", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+            if (result == DialogResult.Yes)
             {
                 using (var MainMenuScreen = new MainMenu())
                 {
@@ -408,6 +443,7 @@ namespace Grid_Game
             }
         }
 
+        /**Displaying a message box after winning the game */
         private void winMessage()
         {
             uncoverAllGrid();
@@ -418,18 +454,10 @@ namespace Grid_Game
             if (result == DialogResult.Yes)
             {
                 saveData();
-                
+
             }
-            DialogResult playAgain = MessageBox.Show("Would you like to play again ?", "Play again?", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
-            if (playAgain == DialogResult.Retry)
-            {
-                using (var GameForm = new Minesweeper())
-                {
-                    this.Hide();
-                    GameForm.ShowDialog();
-                }
-            }
-            else if (playAgain == DialogResult.Cancel)
+            DialogResult playAgain = MessageBox.Show("Would you like to go to the main menu ?", "Game Over", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+            if (result == DialogResult.Yes)
             {
                 using (var MainMenuScreen = new MainMenu())
                 {
@@ -439,7 +467,7 @@ namespace Grid_Game
             }
         }
 
-        //Displaying all bombs and numbers that are on a grid
+        /**Displaying all bombs and numbers that are on a grid*/
         private void uncoverAllGrid()
         {
             for (int i = 0; i < btn.GetLength(0); i++)
@@ -447,25 +475,24 @@ namespace Grid_Game
                 for (int j = 0; j < btn.GetLength(1); j++)
                 {
                     if (btn[i, j].Text.Equals("*"))
-                    btn[i, j].Hide();
+                        btn[i, j].Hide();
                     else
-                    btn[i, j].Enabled=false;
+                        btn[i, j].Enabled = false;
 
                 }
             }
         }
 
-        //When a player clicks on an empty cell, this method is called to clear a larger area of a grid 
-        // NEEDS A REFERENCE 
+        /** When a player clicks on an empty cell, this method is called to clear a larger area of a grid */
         private void uncoverPartOfGrid(int i, int j)
         {
             //if a number of a row and a number of a columns are out of bounds
             if (i < 0 || j < 0 || j >= btn.GetLength(1) || i >= btn.GetLength(0))
-            { 
+            {
                 return;
             }
             //If a button contains a bomb indication or the button has been already revealed
-            if (btn[i,j].BackColor == Color.Red)
+            if (btn[i, j].BackColor == Color.Red)
             {
                 LblBombs.Text = Convert.ToString((Convert.ToInt32(LblBombs.Text) + 1));
             }
@@ -477,23 +504,32 @@ namespace Grid_Game
             //Colors a button in white and makes the text on a button visible
             btn[i, j].BackColor = Color.White;
             btn[i, j].ForeColor = Color.DarkViolet;
-            uncoverPartOfGrid(i, j+1);
-            uncoverPartOfGrid(i, j-1);
-            uncoverPartOfGrid(i+1,j );
-            uncoverPartOfGrid(i-1, j);
 
 
-
-
+            /*The principle of a flood fill algorithm was based on an example from a resource cited below: 
+            *
+            * Title: C# Programming Recursion in Candy Crush Tutorial [Part 6] flood fill algorithm
+            * Author:Shad Sluiter
+            * Date: 2019-06-24
+            * Availability: https://www.youtube.com/watch?v=3wNMYp4NvIE&list=PLhPyEFL5u-i03yjAvWPwYyG6s3K0jH8QX&index=51
+            */
+            uncoverPartOfGrid(i, j + 1);
+            uncoverPartOfGrid(i, j - 1);
+            uncoverPartOfGrid(i + 1, j);
+            uncoverPartOfGrid(i - 1, j);
+            /*
+             * End of code extract. 
+            */
         }
 
 
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           
+
         }
 
+        /** Muting/unmuting the sound of the game */
         private void button2_Click(object sender, EventArgs e)
         {
             if (Program.isPlaying)
@@ -509,5 +545,8 @@ namespace Grid_Game
                 button2.BackgroundImage = Image.FromFile("mute.png");
             }
         }
+
+
+
     }
 }

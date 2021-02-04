@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HighScores));
+
             this.EasyBtn = new System.Windows.Forms.Button();
             this.MediumBtn = new System.Windows.Forms.Button();
             this.HardBtn = new System.Windows.Forms.Button();
@@ -117,6 +119,8 @@
             this.Controls.Add(this.HardBtn);
             this.Controls.Add(this.MediumBtn);
             this.Controls.Add(this.EasyBtn);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "HighScores";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HighScores";
