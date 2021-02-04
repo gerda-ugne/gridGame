@@ -226,6 +226,9 @@
             this.Controls.Add(this.MedBtn);
             this.Controls.Add(this.EasyBtn);
             this.Controls.Add(this.TitleImg);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+
             this.Name = "Difficulty";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Difficulty";
