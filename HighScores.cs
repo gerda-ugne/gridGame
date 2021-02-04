@@ -16,6 +16,11 @@ namespace Grid_Game
         public HighScores()
         {
             InitializeComponent();
+            label1.Parent = pictureBox1;
+            label1.BackColor = Color.Transparent;
+
+            DifficultyLbl.Parent = pictureBox1;
+            DifficultyLbl.BackColor = Color.Transparent;
         }
 
         private void BackBtn_Click(object sender, EventArgs e)
@@ -86,6 +91,37 @@ namespace Grid_Game
         }
 
         private void HighScores_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (Program.isPlaying)
+            {
+                Program.player.Stop();
+                button2.BackgroundImage = Image.FromFile("unmute.png");
+                Program.isPlaying = false;
+            }
+            else
+            {
+                Program.isPlaying = true;
+                Program.player.PlayLooping();
+                button2.BackgroundImage = Image.FromFile("mute.png");
+            }
+        }
+
+        private void DifficultyLbl_Click(object sender, EventArgs e)
         {
 
         }

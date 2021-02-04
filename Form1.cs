@@ -432,8 +432,17 @@ namespace Grid_Game
             uncoverAllGrid();
             DisplayedTimer.Stop();
             TotalTimer.Stop();
-            DialogResult result = MessageBox.Show("Would you like to go to the main menu ?", "Game Over", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-            if (result == DialogResult.Yes)
+            DialogResult playAgain = MessageBox.Show("Would you like to play again ?", "Game Over", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
+            if (playAgain == DialogResult.Retry)
+            {
+                using (var GameForm = new Minesweeper())
+                {
+                    this.Hide();
+                    GameForm.ShowDialog();
+                }
+
+            }
+            else if (playAgain == DialogResult.Cancel)
             {
                 using (var MainMenuScreen = new MainMenu())
                 {
@@ -456,8 +465,17 @@ namespace Grid_Game
                 saveData();
 
             }
-            DialogResult playAgain = MessageBox.Show("Would you like to go to the main menu ?", "Game Over", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-            if (result == DialogResult.Yes)
+            DialogResult playAgain = MessageBox.Show("Would you like to play again ?", "Game Over", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
+            if(playAgain == DialogResult.Retry)
+            {
+                using (var GameForm = new Minesweeper())
+                {
+                    this.Hide();
+                    GameForm.ShowDialog();
+                }
+
+            }
+            else if (playAgain == DialogResult.Cancel)
             {
                 using (var MainMenuScreen = new MainMenu())
                 {
