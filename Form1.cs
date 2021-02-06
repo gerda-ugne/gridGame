@@ -274,7 +274,7 @@ namespace Grid_Game
             String playerScore = LblTimer.Text;
             String playerName = Program.name;
 
-            String ToSave = playerName + "." + playerScore;
+            String ToSave = playerName + "." + playerScore + "\n";
 
             String SavePath = "";
 
@@ -459,7 +459,7 @@ namespace Grid_Game
             DisplayedTimer.Stop();
             TotalTimer.Stop();
 
-            DialogResult result = MessageBox.Show("You won, would you like to save your score?", "WIN", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+            DialogResult result = MessageBox.Show("You won, would you like to save your score?", "Congratulations!", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
             if (result == DialogResult.Yes)
             {
                 saveData();

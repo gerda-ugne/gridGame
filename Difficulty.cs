@@ -78,15 +78,15 @@ namespace Grid_Game
             {
                 if (Program.difficulty == "Easy")
                 {
-                    Program.BombAmountSet = 5;
+                    Program.BombAmountSet = 15;
                 }
                 else if (Program.difficulty == "Medium")
                 {
-                    Program.BombAmountSet = 10;
+                    Program.BombAmountSet = 25;
                 }
                 else if (Program.difficulty == "Hard")
                 {
-                    Program.BombAmountSet = 15;
+                    Program.BombAmountSet = 35;
                 }
                 else
                 {
