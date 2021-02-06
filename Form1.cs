@@ -465,7 +465,7 @@ namespace Grid_Game
                 saveData();
 
             }
-            DialogResult playAgain = MessageBox.Show("Would you like to play again ?", "Game Over", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
+            DialogResult playAgain = MessageBox.Show("Would you like to play again ?", "Play again?", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
             if(playAgain == DialogResult.Retry)
             {
                 using (var GameForm = new Minesweeper())
