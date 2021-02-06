@@ -7,14 +7,14 @@ using System.Windows.Forms;
 
 namespace Grid_Game
 {
+    /**A class of a button to have the properties (i.e. number of a row and a column) of each button definied*/
     class GridButton : Button
     {
         //Fields
-        // NEEDS A REFERENCE
         public int row { get; set; }
         public int column { get; set; }
 
-        // A constructor
+        /** A constructor*/
         public GridButton(int r, int c)
         {
             row = r;
@@ -24,4 +24,3 @@ namespace Grid_Game
 
     }
 }
-
