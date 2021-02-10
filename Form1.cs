@@ -140,9 +140,9 @@ namespace Grid_Game
             Controls.Add(btnFace);
 
             //Back button
-            btnBack.SetBounds(120, 0 ,120, 30);
+            btnBack.SetBounds(80, 647 ,180, 53);
             btnBack.BackColor = Color.Brown;
-            btnBack.Text = "Main Menu";
+            btnBack.Text = "Exit to Main Menu";
             btnBack.Font = new Font("Molot", 12);
             btnBack.Click += new EventHandler(this.BackBtn_Click);
             Controls.Add(btnBack);
