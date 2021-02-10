@@ -7,7 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+/**
+ * 
+ * Group 8
+ * Gerda Ugne Pupelyte 190013631
+ * Laura Naslenaite 190013642
+ * Cameron Sutcliffe 190005288
+ 
+ 
+ */
 namespace Grid_Game
 {
     public partial class Difficulty : Form

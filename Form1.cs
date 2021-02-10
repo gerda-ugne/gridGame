@@ -11,7 +11,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
-
+/**
+ * 
+ * Group 8
+ * Gerda Ugne Pupelyte 190013631
+ * Laura Naslenaite 190013642
+ * Cameron Sutcliffe 190005288
+ 
+ 
+ */
 namespace Grid_Game
 {
     public partial class Minesweeper : Form
@@ -98,7 +106,7 @@ namespace Grid_Game
             LblTimer.TextAlign = ContentAlignment.MiddleRight;
             LblTimer.BackColor = Color.Black;
             LblTimer.ForeColor = Color.Red;
-            LblTimer.Font = new Font("Molot", 40);
+            LblTimer.Font = new Font("Impact", 40);
             this.Controls.Add(LblTimer);
 
             /** Customizing bombs label*/
@@ -108,7 +116,7 @@ namespace Grid_Game
             LblBombs.TextAlign = ContentAlignment.MiddleLeft;
             LblBombs.BackColor = Color.Black;
             LblBombs.ForeColor = Color.Red;
-            LblBombs.Font = new Font("Molot", 40);
+            LblBombs.Font = new Font("Impact", 40);
             this.Controls.Add(LblBombs);
 
             //Starting the game timers
