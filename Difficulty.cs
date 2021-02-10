@@ -15,6 +15,7 @@ namespace Grid_Game
         public Difficulty()
         {
             InitializeComponent();
+
             /** Assinging image as a parent to hide the background of the labels*/
             this.NameTitleLbl.Parent = this.TitleImg;
             this.NameLbl.Parent = this.TitleImg;
@@ -31,6 +32,7 @@ namespace Grid_Game
 
         }
 
+        /** Returns player to the main menu*/
         private void BackBtn_Click(object sender, EventArgs e)
         {
             using (var MainMenuScreen = new MainMenu())
@@ -40,24 +42,28 @@ namespace Grid_Game
             }
         }
 
+        /** Sets easy difficulty */
         private void EasyBtn_Click(object sender, EventArgs e)
         {
             Program.difficulty = "Easy";
             DifficultyLbl.Text = "Difficulty: " + (Program.difficulty);
         }
 
+        /** Sets medium difficulty */
         private void MedBtn_Click(object sender, EventArgs e)
         {
             Program.difficulty = "Medium";
             DifficultyLbl.Text = "Difficulty: " + (Program.difficulty);
         }
 
+        /** Sets hard difficulty */
         private void HardBtn_Click(object sender, EventArgs e)
         {
             Program.difficulty = "Hard";
             DifficultyLbl.Text = "Difficulty: " + (Program.difficulty);
         }
 
+        /** Sets player's name */
         private void UpdateNameBtn_Click(object sender, EventArgs e)
         {
             if (NameTextBox.Text != "")
@@ -71,7 +77,7 @@ namespace Grid_Game
             }
 
         }
-
+        /** Starts a new game with the set settings */
         private void StartBtn_Click(object sender, EventArgs e)
         {
             if (Program.name != "" && Program.difficulty != "")
@@ -125,6 +131,7 @@ namespace Grid_Game
 
         }
 
+        /** Controls for the mute button*/
         private void button2_Click(object sender, EventArgs e)
         {
             if (Program.isPlaying)

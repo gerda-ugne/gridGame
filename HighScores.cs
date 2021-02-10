@@ -16,6 +16,8 @@ namespace Grid_Game
         public HighScores()
         {
             InitializeComponent();
+
+            /** Sets transparency for the labels */
             label1.Parent = pictureBox1;
             label1.BackColor = Color.Transparent;
 
@@ -23,6 +25,7 @@ namespace Grid_Game
             DifficultyLbl.BackColor = Color.Transparent;
         }
 
+        /** Returns the player to the main menu */
         private void BackBtn_Click(object sender, EventArgs e)
         {
             using (var MainMenuScreen = new MainMenu())
@@ -32,6 +35,7 @@ namespace Grid_Game
             }
         }
 
+        /** Displays the highscores of the easy difficulty*/
         private void EasyBtn_Click(object sender, EventArgs e)
         {
             ScoreBox.Items.Clear();
@@ -52,6 +56,8 @@ namespace Grid_Game
 
         }
 
+
+        /** Displays the highscores of the medium difficulty*/
         private void MediumBtn_Click(object sender, EventArgs e)
         {
             ScoreBox.Items.Clear();
@@ -71,6 +77,7 @@ namespace Grid_Game
             }
         }
 
+        /** Displays the highscores of the hard difficulty*/
         private void HardBtn_Click(object sender, EventArgs e)
         {
             ScoreBox.Items.Clear();
@@ -105,6 +112,7 @@ namespace Grid_Game
 
         }
 
+        /** Controls the mute button */
         private void button2_Click(object sender, EventArgs e)
         {
             if (Program.isPlaying)
