@@ -54,22 +54,22 @@ namespace Grid_Game
         {
             InitializeComponent();
 
+            //Background image
             Image bgImage = Image.FromFile("bgImage.png");
             this.BackgroundImage = bgImage;
             this.BackgroundImageLayout = ImageLayout.Stretch;
 
-            //TODO: scale timer with difficulty
 
             //Total timer counts the time until the end of the game
             TotalTimer = new System.Windows.Forms.Timer();
             //Displayed timer shows the current elapsed seconds to the player
             DisplayedTimer = new System.Windows.Forms.Timer();
 
-            //TotalTimer.Interval = 9990000;
+            TotalTimer.Interval = 999000;
             DisplayedTimer.Interval = 1000;
 
             //Event handlers for handling timer ticks
-            //TotalTimer.Tick += new EventHandler(TotalTimer_Tick);
+            TotalTimer.Tick += new EventHandler(TotalTimer_Tick);
             DisplayedTimer.Tick += new EventHandler(DisplayedTimer_Tick);
 
             /** Customizing grid */
@@ -111,10 +111,9 @@ namespace Grid_Game
             LblBombs.Font = new Font("Molot", 40);
             this.Controls.Add(LblBombs);
 
+            //Starting the game timers
             TotalTimer.Start();
             DisplayedTimer.Start();
-
-            //lblTime.Text = "You have cleared the minefield in " + stopwatch.Elapsed.Seconds.ToString() + "seconds."; 
 
 
             //Customizing "Smiley face" button
@@ -180,13 +179,30 @@ namespace Grid_Game
 
 
         /** Event that happens once the timer reaches the limit of time given*/
-        //private void TotalTimer_Tick(object sender, EventArgs e)
-        // {
-        //  TotalTimer.Stop();
-        //  DisplayedTimer.Stop();
+        private void TotalTimer_Tick(object sender, EventArgs e)
+        {
+          TotalTimer.Stop();
+          DisplayedTimer.Stop();
 
-        //  DialogResult result = MessageBox.Show("Time is due. Would you like to try again ?", "Time's up", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
-        // }
+          DialogResult result = MessageBox.Show("Time is due. Would you like to try again ?", "Time's up", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation);
+          if (result == DialogResult.Retry)
+            {
+                using (var GameForm = new Minesweeper())
+                {
+                    this.Hide();
+                    GameForm.ShowDialog();
+                }
+
+            }
+            else if (result == DialogResult.Cancel)
+            {
+                using (var MainMenuScreen = new MainMenu())
+                {
+                    this.Hide();
+                    MainMenuScreen.ShowDialog();
+                }
+            }
+         }
 
         /** Randomly placing bombs on a grid*/
         private void placeBombs(int row, int col)
