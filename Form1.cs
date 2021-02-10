@@ -58,7 +58,7 @@ namespace Grid_Game
             Image bgImage = Image.FromFile("bgImage.png");
             this.BackgroundImage = bgImage;
             this.BackgroundImageLayout = ImageLayout.Stretch;
-
+            Button btnBack = new Button();
 
             //Total timer counts the time until the end of the game
             TotalTimer = new System.Windows.Forms.Timer();
@@ -130,6 +130,14 @@ namespace Grid_Game
             btnFace.FlatAppearance.MouseOverBackColor = Color.Transparent;
             btnFace.FlatAppearance.MouseDownBackColor = Color.Transparent;
             Controls.Add(btnFace);
+
+            //Back button
+            btnBack.SetBounds(120, 0 ,120, 30);
+            btnBack.BackColor = Color.Brown;
+            btnBack.Text = "Main Menu";
+            btnBack.Font = new Font("Molot", 12);
+            btnBack.Click += new EventHandler(this.BackBtn_Click);
+            Controls.Add(btnBack);
 
             generateGridOfLabels();
 
@@ -580,7 +588,15 @@ namespace Grid_Game
             }
         }
 
-
+        /**Going back from game screen to main menu screen */
+        private void BackBtn_Click(object sender, EventArgs e)
+        {
+            using (var MainMenuScreen = new MainMenu())
+            {
+                this.Hide();
+                MainMenuScreen.ShowDialog();
+            }
+        }
 
     }
 }
